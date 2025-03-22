@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 // Replace with your Google Analytics measurement ID
-const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+const GA_MEASUREMENT_ID = 'G-F0NEE5YMQX';
 
 export default function GoogleAnalytics() {
   const pathname = usePathname();

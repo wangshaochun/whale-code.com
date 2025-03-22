@@ -2,12 +2,13 @@
 
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 // Replace with your Google Analytics measurement ID
 const GA_MEASUREMENT_ID = 'G-F0NEE5YMQX';
 
-export default function GoogleAnalytics() {
+// 创建一个内部组件来使用useSearchParams
+function GoogleAnalyticsInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -26,6 +27,11 @@ export default function GoogleAnalytics() {
     handleRouteChange(window.location.href);
   }, [pathname, searchParams]);
 
+  return null;
+}
+
+// 主组件，将内部组件包装在Suspense中
+export default function GoogleAnalytics() {
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
@@ -48,6 +54,9 @@ export default function GoogleAnalytics() {
           `,
         }}
       />
+      <Suspense fallback={null}>
+        <GoogleAnalyticsInner />
+      </Suspense>
     </>
   );
 }

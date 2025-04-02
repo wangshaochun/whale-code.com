@@ -41,40 +41,39 @@ const rotateAnimation = {
 
 const products = [
   {
-    titleKey: 'product1Title' as TranslationKey,
-    descriptionKey: 'product1Desc' as TranslationKey,
-    image: "/images/wotushe.png",
-    link: "https://www.52wts.cn"
-  },
-  {
     titleKey: 'product2Title' as TranslationKey,
     descriptionKey: 'product2Desc' as TranslationKey,
     image: "/images/wtaigc.png",
     link: "https://www.wtaigc.com"
   },
   {
-    titleKey: 'product3Title' as TranslationKey,
-    descriptionKey: 'product3Desc' as TranslationKey,
-    image: "/images/wtai.png",
-    link: "https://wtai.cc"
-  },
-  {
-    titleKey: 'product4Title' as TranslationKey,
-    descriptionKey: 'product4Desc' as TranslationKey,
-    image: "/images/wtsea.png",
-    link: "https://wtsea.cn"
-  },
-  {
-    titleKey: 'product5Title' as TranslationKey,
-    descriptionKey: 'product5Desc' as TranslationKey,
-    image: "/images/aitranslation.png",
-    link: "https://aitranslate.site"
-  },
-  {
     titleKey: 'product6Title' as TranslationKey,
     descriptionKey: 'product6Desc' as TranslationKey,
     image: "/images/voicecanvas.png",
     link: "https://voicecanvas.org"
+  }
+];
+
+const coreTeam = [
+  {
+    nameKey: 'teamMember1Name' as TranslationKey,
+    roleKey: 'teamMember1Role' as TranslationKey,
+    image: "/images/shaoye.jpg"
+  },
+  {
+    nameKey: 'teamMember2Name' as TranslationKey,
+    roleKey: 'teamMember2Role' as TranslationKey,
+    image: "/images/leilei.jpg"
+  },
+  {
+    nameKey: 'teamMember3Name' as TranslationKey,
+    roleKey: 'teamMember3Role' as TranslationKey,
+    image: "/images/pengpeng.jpg"
+  },
+  {
+    nameKey: 'teamMember4Name' as TranslationKey,
+    roleKey: 'teamMember4Role' as TranslationKey,
+    image: "/images/huahua.jpg"
   }
 ];
 
@@ -242,6 +241,58 @@ export default function Home() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,theme(colors.primary/10)_1px,transparent_1px),linear-gradient(to_bottom,theme(colors.primary/10)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black_70%)]" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        </div>
+      </section>
+
+
+      {/* Core Team Section */}
+      <section id="team" className="py-20 bg-muted/50">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-center mb-12">
+              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                {t('coreTeamTitle')}
+              </span>
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {coreTeam.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={member.image}
+                      alt={t(member.nameKey)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="group-hover:text-primary transition-colors text-xl">
+                      {t(member.nameKey)}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors">
+                      {t(member.roleKey)}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

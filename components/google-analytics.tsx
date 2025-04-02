@@ -35,7 +35,7 @@ export default function GoogleAnalytics() {
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
-      <Script
+      {/* <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
       />
@@ -56,7 +56,7 @@ export default function GoogleAnalytics() {
       />
       <Suspense fallback={null}>
         <GoogleAnalyticsInner />
-      </Suspense>
+      </Suspense> */}
     </>
   );
 }

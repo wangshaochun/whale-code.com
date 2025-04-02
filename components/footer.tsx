@@ -1,14 +1,8 @@
 'use client';
 
 import { useTranslation } from '@/hooks/useTranslation';
-import { FaTwitter, FaGithub } from 'react-icons/fa';
-import { SiWechat } from 'react-icons/si';
 import Image from 'next/image';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Phone } from 'lucide-react';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -23,36 +17,22 @@ export default function Footer() {
               {t('footerDesc')}
             </p>
           </div>
-          
-          <div>
-            <h4 className="font-medium mb-4 text-left md:text-right">{t('footerFollow')}</h4>
-            <div className="flex space-x-4 justify-start md:justify-end">
-              <a href="https://x.com/itusi2024" className="p-2 rounded-full hover:bg-muted transition-colors" target="_blank" rel="noopener noreferrer">
-                <FaTwitter size={20} />
-              </a>
-              <a href="https://github.com/ItusiAI" className="p-2 rounded-full hover:bg-muted transition-colors" target="_blank" rel="noopener noreferrer">
-                <FaGithub size={20} />
-              </a>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <button className="p-2 rounded-full hover:bg-muted transition-colors">
-                    <SiWechat size={20} />
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <div className="p-2">
-                    <Image 
-                      src="/weixin.jpg" 
-                      alt="WeChat QR Code" 
-                      width={200} 
-                      height={200} 
-                      className="rounded-md"
-                    />
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
+          <div className="max-w-md mb-8 md:mb-0 text-left">
+            <h4 className="text-lg font-semibold mb-4">{t('businessCooperation')}</h4>
+            <p className="text-sm text-muted-foreground flex items-center gap-2">
+                  <Phone className="w-4 h-4" />
+                  15614392011
+            </p>
+          </div> 
+            <div className="flex flex-col space-y-4 md:items-end"> 
+                <Image 
+                  src="/weixin.jpg" 
+                  alt="WeChat QR Code" 
+                  width={120} 
+                  height={120} 
+                  className="rounded-md"
+                />
+            </div> 
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
           &copy; {new Date().getFullYear()} {t('companyName')}. {t('footerRights')}

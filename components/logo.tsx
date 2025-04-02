@@ -11,7 +11,7 @@ export default function Logo() {
       <div className="relative h-8 w-8">
         <Image 
           src="/logo.png" 
-          alt="ITUSI Logo" 
+          alt="whale-code Logo" 
           fill
           className="object-contain"
           sizes="32px"

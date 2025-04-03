@@ -245,57 +245,6 @@ export default function Home() {
       </section>
 
 
-      {/* Core Team Section */}
-      <section id="team" className="py-20 bg-muted/50">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold text-center mb-12">
-              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                {t('coreTeamTitle')}
-              </span>
-            </h2>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {coreTeam.map((member, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={member.image}
-                      alt={t(member.nameKey)}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="group-hover:text-primary transition-colors text-xl">
-                      {t(member.nameKey)}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors">
-                      {t(member.roleKey)}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Services Section */}
       <section id="services" className="py-20">
         <div className="container">
@@ -313,6 +262,21 @@ export default function Home() {
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
+               {
+                icon: Navigation,
+                title: t('aiNavigatorTitle'),
+                description: t('aiNavigatorDesc')
+              },
+              {
+                icon: Globe,
+                title: t('aiTranslationTitle'),
+                description: t('aiTranslationDesc')
+              },
+              {
+                icon: Mic2,
+                title: t('aiVoiceTitle'),
+                description: t('aiVoiceDesc')
+              },
               {
                 icon: Newspaper,
                 title: t('aiNewsTitle'),
@@ -327,21 +291,6 @@ export default function Home() {
                 icon: Code,
                 title: t('aiProgrammingTitle'),
                 description: t('aiProgrammingDesc')
-              },
-              {
-                icon: Navigation,
-                title: t('aiNavigatorTitle'),
-                description: t('aiNavigatorDesc')
-              },
-              {
-                icon: Globe,
-                title: t('aiTranslationTitle'),
-                description: t('aiTranslationDesc')
-              },
-              {
-                icon: Mic2,
-                title: t('aiVoiceTitle'),
-                description: t('aiVoiceDesc')
               }
             ].map((service, index) => (
               <motion.div
@@ -497,7 +446,7 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-6 pt-6">
                 <Card className="bg-primary/5 border-primary/10">
                   <CardHeader>
-                    <CardTitle className="text-4xl font-bold text-primary">3+</CardTitle>
+                    <CardTitle className="text-4xl font-bold text-primary">10+</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground">{t('yearsOfInnovation')}</p>
@@ -513,6 +462,59 @@ export default function Home() {
                 </Card>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      
+
+      {/* Core Team Section */}
+      <section id="team" className="py-20 bg-muted/50">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-center mb-12">
+              <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                {t('coreTeamTitle')}
+              </span>
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {coreTeam.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="overflow-hidden group hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={member.image}
+                      alt={t(member.nameKey)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="group-hover:text-primary transition-colors text-xl">
+                      {t(member.nameKey)}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors">
+                      {t(member.roleKey)}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

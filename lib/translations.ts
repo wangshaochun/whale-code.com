@@ -16,18 +16,18 @@ export const translations = {
     
     // 服务部分
     ourServices: 'Our Services',
-    aiNewsTitle: 'AI News',
-    aiNewsDesc: 'Stay updated with the latest AI information, trends, and industry developments.',
-    aiResearchTitle: 'AI Side Business Training',
-    aiResearchDesc: 'Embrace the AI era and create your own side income stream.',
-    aiTranslationTitle: 'AI Translation Services',
-    aiTranslationDesc: 'Advanced AI-powered translation services for seamless global communication.',
-    aiProgrammingTitle: 'AI Programming Training',
-    aiProgrammingDesc: 'From beginner to AI engineer, master all programming skills in one place.',
+    aiNewsTitle: 'Office Program Development',
+    aiNewsDesc: 'Providing customized solutions to improve team collaboration efficiency',
+    aiResearchTitle: 'AI Training',
+    aiResearchDesc: 'Embrace the AI era and use AI to assist your business',
+    aiTranslationTitle: 'AI Data Analysis Tools',
+    aiTranslationDesc: 'Precise data value mining through natural language to aid decision-making',
+    aiProgrammingTitle: 'Corporate Website Upgrade',
+    aiProgrammingDesc: 'Modern website design with enhanced SEO effectiveness',
     aiVoiceTitle: 'AI Voice Cloning',
-    aiVoiceDesc: 'Create natural-sounding voice clones for various applications.',
-    aiNavigatorTitle: 'AI Navigator',
-    aiNavigatorDesc: 'The most comprehensive and up-to-date collection of global AI tools.',
+    aiVoiceDesc: 'Create natural-sounding voice clones for various applications',
+    aiNavigatorTitle: 'Intelligent Customer Service System',
+    aiNavigatorDesc: 'Build exclusive knowledge base for efficient answers to improve customer satisfaction',
     
     // 产品部分
     ourProducts: 'Our Products',
@@ -90,24 +90,24 @@ export const translations = {
     heroTitle1: '通过AI赋能企业创新',
     heroTitle2: '用AI改变您的业务',
     heroTitle3: '技术的未来',
-    heroDescription: '通过前沿AI解决方案改变您的业务，与我们一起塑造技术的未来',
+    heroDescription: '我们专注于AI应用与办公程序开发，以技术为核心，助力企业高效发展。',
     getStarted: '开始使用',
     learnMore: '了解更多',
     
     // 服务部分
     ourServices: '我们的服务',
-    aiNewsTitle: 'AI资讯',
-    aiNewsDesc: '及时了解最新的AI信息、趋势和行业发展',
-    aiResearchTitle: 'AI副业培训',
-    aiResearchDesc: '拥抱AI时代，打造你的专属副业收入',
-    aiTranslationTitle: 'AI翻译服务',
-    aiTranslationDesc: '先进的AI驱动翻译服务，实现无缝全球沟通',
-    aiProgrammingTitle: 'AI编程培训',
-    aiProgrammingDesc: '从小白到AI工程师，编程技能一网打尽',
+    aiNewsTitle: '办公程序开发',
+    aiNewsDesc: '提供定制化解决方案，提升团队协作效率',
+    aiResearchTitle: 'AI培训',
+    aiResearchDesc: '拥抱AI时代，使用AI辅助你的业务',
+    aiTranslationTitle: 'AI数据分析工具',
+    aiTranslationDesc: '自然语言精准挖掘数据价值，助力决策',
+    aiProgrammingTitle: '企业官网升级',
+    aiProgrammingDesc: '现代化官网设计，更具SEO效果',
     aiVoiceTitle: 'AI语音克隆',
-    aiVoiceDesc: '创建自然听起来的语音克隆，适用于各种应用',
-    aiNavigatorTitle: 'AI导航',
-    aiNavigatorDesc: '全球AI工具，最新最全高品质',
+    aiVoiceDesc: '创建自然听起来的语音克隆，适用更多应用',
+    aiNavigatorTitle: '智能客服系统',
+    aiNavigatorDesc: '打造专属知识库，高效解答以提升客户满意度',
     
     // 产品部分
     ourProducts: '我们的产品',
@@ -145,11 +145,11 @@ export const translations = {
     businessCooperation: '商务合作',
     
     // 统计卡片
-    yearsOfInnovation: '年创新历程',
+    yearsOfInnovation: '赋能企业',
     globalUsers: '全球用户',
     
     // 核心团队
-    coreTeamTitle: '核心团队',
+    coreTeamTitle: '我们的团队',
     teamMember1Name: '少爷',
     teamMember1Role: '项目经理: 为项目护航',
     teamMember2Name: '雷雷',
@@ -157,7 +157,7 @@ export const translations = {
     teamMember3Name: '鹏鹏',
     teamMember3Role: '全栈开发 - 80后老Coder',
     teamMember4Name: '花花',
-    teamMember4Role: '全栈开发 - 没有搞不定功能',
+    teamMember4Role: '全栈开发 - 高效沟通事半功倍',
   }
 };
 

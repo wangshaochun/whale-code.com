@@ -70,14 +70,24 @@
     --chart-4: 35 94% 35%;
     --chart-5: 35 94% 25%;
   }
-}
-
-@layer base {
+  
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  
+  pre {
+    @apply p-4 my-4 rounded-lg bg-muted overflow-x-auto;
+  }
+  
+  code {
+    @apply px-1.5 py-0.5 rounded-md bg-muted text-sm font-mono;
+  }
+  
+  pre code {
+    @apply p-0 bg-transparent;
   }
 }
 

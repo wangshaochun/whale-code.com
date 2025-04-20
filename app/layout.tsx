@@ -5,31 +5,12 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { LanguageProvider } from '@/components/language-provider';
 import ClientLayout from '@/components/client-layout';
 import GoogleAnalytics from '@/components/google-analytics';
+import { generateMetadata } from './generateMetadata';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'whale-code - Leading AI Innovation and Development',
-  description: 'Transform your business with cutting-edge AI solutions. Join us in shaping the future of technology.',
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: '32x32' },
-      { url: '/logo.png', sizes: 'any' }
-    ],
-    apple: '/logo.png',
-  },
-  openGraph: {
-    title: 'whale-code - Leading AI Innovation and Development',
-    description: 'Transform your business with cutting-edge AI solutions. Join us in shaping the future of technology.',
-    images: ['/images/og-image.png'],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'whale-code - Leading AI Innovation and Development',
-    description: 'Transform your business with cutting-edge AI solutions. Join us in shaping the future of technology.',
-    images: ['images/og-image.png'],
-  },
-};
+// 默认导出中文元数据
+export const metadata: Metadata = generateMetadata('zh');
 
 export const viewport = {
   width: 'device-width',

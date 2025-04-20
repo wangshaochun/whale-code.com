@@ -43,8 +43,8 @@ const products = [
   {
     titleKey: 'product2Title' as TranslationKey,
     descriptionKey: 'product2Desc' as TranslationKey,
-    image: "/images/wtaigc.png",
-    link: "https://www.wtaigc.com"
+    image: "/images/n8n.jpg",
+    link: ""
   },
   {
     titleKey: 'product6Title' as TranslationKey,

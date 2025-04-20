@@ -10,7 +10,7 @@ export const translations = {
     heroTitle1: 'Empowering Innovation Through AI',
     heroTitle2: 'Transform Your Business with AI',
     heroTitle3: 'Future of Technology',
-    heroDescription: 'Transform your business with cutting-edge AI solutions. Join us in shaping the future of technology.',
+    heroDescription: '',
     getStarted: 'Get Started',
     learnMore: 'Learn More',
     
@@ -33,8 +33,8 @@ export const translations = {
     ourProducts: 'Our Products',
     product1Title: 'Wotushe',
     product1Desc: 'AI Explorer, focused on creating educational content about AI series, suitable for learning and communication for those interested in AI.',
-    product2Title: 'WTAIGC',
-    product2Desc: 'Sharing the latest and most comprehensive AI tools from around the world.',
+    product2Title: 'n8n platform',
+    product2Desc: 'n8n Automatic content collection, cleaning, and decision-making suggestion platform',
     product3Title: 'WTAI Navigation',
     product3Desc: 'High-quality, latest, and most comprehensive AI navigation.',
     product4Title: 'WTSea',
@@ -54,6 +54,7 @@ export const translations = {
     
     // 导航
     home: 'Home',
+    blog: 'Blog',
     services: 'Services',
     products: 'Products',
     about: 'About',
@@ -81,11 +82,11 @@ export const translations = {
   },
   zh: {
     // 元数据
-    metaTitle: '鲸码科技® - 领先的AI创新与开发',
+    metaTitle: '鲸码科技 - 领先的AI创新与开发',
     metaDescription: '通过AI创新、教育赋能企业，探索我们的AI资讯、AI课程、海外业务服务和前沿解决方案',
     
     // 标题
-    companyName: '鲸码科技®',
+    companyName: '鲸码科技',
     // 首页
     heroTitle1: '通过AI赋能企业创新',
     heroTitle2: '用AI改变您的业务',
@@ -113,8 +114,8 @@ export const translations = {
     ourProducts: '我们的产品',
     product1Title: '沃图社',
     product1Desc: 'Ai探索家，专注于编写有关Ai系列的教学文章，适用于对Ai感兴趣人群的学习交流',
-    product2Title: '沃图AIGC',
-    product2Desc: '分享全球最新最全的AI工具',
+    product2Title: '企业AI工作流平台',
+    product2Desc: '基于n8n打造企业智能工作流平台',
     product3Title: 'WTAI Navigation',
     product3Desc: '高品质最新最全AI导航',
     product4Title: '沃图海',
@@ -134,6 +135,7 @@ export const translations = {
     
     // 导航
     home: '首页',
+    blog: '博客',
     services: '服务',
     products: '产品',
     about: '关于',

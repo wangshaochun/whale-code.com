@@ -32,14 +32,14 @@ export default function Header() {
           <a href="/" className="text-foreground/60 hover:text-primary transition-colors">
             {t('home')}
           </a>
-          <a href="#services" className="text-foreground/60 hover:text-primary transition-colors">
+          <a href="/#services" className="text-foreground/60 hover:text-primary transition-colors">
             {t('services')}
           </a>
-          <a href="#products" className="text-foreground/60 hover:text-primary transition-colors">
-            {t('products')}
-          </a>
-          <a href="#about" className="text-foreground/60 hover:text-primary transition-colors">
+          <a href="/#about" className="text-foreground/60 hover:text-primary transition-colors">
             {t('about')}
+          </a> 
+          <a href="/blog" className="text-foreground/60 hover:text-primary transition-colors">
+            {t('blog')}
           </a>
         </nav>
 
@@ -81,6 +81,9 @@ export default function Header() {
               <div className="flex flex-col gap-6 mt-6">
                 <a href="/" className="text-foreground/60 hover:text-primary transition-colors">
                   {t('home')}
+                </a>
+                <a href="/blog" className="text-foreground/60 hover:text-primary transition-colors">
+                  {t('blog')}
                 </a>
                 <a href="#services" className="text-foreground/60 hover:text-primary transition-colors">
                   {t('services')}

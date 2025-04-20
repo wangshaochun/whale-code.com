@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="container py-8 md:py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="max-w-md mb-8 md:mb-0 text-left">
-            <h3 className="text-lg font-semibold mb-4">{t('companyName')}</h3>
+            <h3 className="text-lg font-semibold mb-4">石家庄鲸码互联网科技</h3>
             <p className="text-sm text-muted-foreground">
               {t('footerDesc')}
             </p>
@@ -21,7 +21,8 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">{t('businessCooperation')}</h4>
             <p className="text-sm text-muted-foreground flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  15614392011
+                  15614392011 <br/>
+                  13780200356
             </p>
           </div> 
             <div className="flex flex-col space-y-4 md:items-end"> 

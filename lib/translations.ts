@@ -82,8 +82,8 @@ export const translations = {
   },
   zh: {
     // 元数据
-    metaTitle: '鲸码科技 - 领先的AI创新与开发',
-    metaDescription: '通过AI创新、教育赋能企业，探索我们的AI资讯、AI课程、海外业务服务和前沿解决方案',
+    metaTitle: '鲸码科技 - 通过AI创新赋能企业',
+    metaDescription: '通过AI创新赋能企业',
     
     // 标题
     companyName: '鲸码科技',
@@ -126,12 +126,12 @@ export const translations = {
     product6Desc: '40余种语言即时文本转语音，支持声音克隆，基于先进AI技术实现清晰自然的语音合成',
     
     // 关于部分
-    aboutUs: '关于鲸码科技®',
+    aboutUs: '鲸码科技®',
     aboutDesc: '通过我们全面的AI产品和服务套件，我们使组织能够充分发挥人工智能的潜力，我们专注于教育、创新和实际应用，确保我们的客户在快速发展的技术环境中保持领先地位',
     ourVision: '我们的愿景',
     visionDesc: '鲸码科技®致力于普及人工智能技术，使其对全球企业和个人都可访问且有益。我们相信AI的变革力量可以创造一个更高效、更创新、更互联的世界。',
     ourMission: '我们的使命',
-    missionDesc: '我们的使命是通过AI创新、教育赋能企业和个人，创造一个更好的未来。',
+    missionDesc: '我们的使命是通过AI创新赋能企业和个人，创造一个更好的未来。',
     
     // 导航
     home: '首页',
@@ -141,7 +141,7 @@ export const translations = {
     about: '关于',
     
     // 页脚
-    footerDesc: '通过AI创新和教育赋能企业',
+    footerDesc: '通过AI创新赋能企业',
     footerFollow: '联系我们',
     footerRights: '版权所有',
     businessCooperation: '商务合作',

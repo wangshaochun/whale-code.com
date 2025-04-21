@@ -13,7 +13,7 @@ export default function BlogPage() {
         <div className="grid gap-2">
           {posts.map((post) => (
             <article key={post.id} className="p-2 border rounded-lg shadow-sm transition-shadow">
-              <Link href={`/blog/${encodeURIComponent(post.id)}`} className="block">
+              <Link href={`/blog/${post.id}`} className="block">
                 <h2 className="text-xl font-semibold hover:text-blue-600 transition-colors">{post.title}</h2>
                 {post.date && (
                   <time className="text-sm text-gray-500 mt-1 block">{post.date}</time>

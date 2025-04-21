@@ -72,7 +72,9 @@ export function getAllPosts(): Post[] {
 // 根据ID获取单篇文章的详细内容
 export function getPostData(id: string): PostWithContent {
   try {
-    const fullPath = path.join(postsDirectory, `${id}.md`);
+    // 解码 URL 编码的 id
+    const decodedId = decodeURIComponent(id);
+    const fullPath = path.join(postsDirectory, `${decodedId}.md`); 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // 使用gray-matter解析元数据
@@ -84,7 +86,7 @@ export function getPostData(id: string): PostWithContent {
     // 将数据与内容一起返回
     return {
       id,
-      title,
+      title: decodeURIComponent(title),
       content: matterResult.content,
       ...(matterResult.data.date && { date: matterResult.data.date }),
     };

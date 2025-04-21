@@ -6,16 +6,14 @@ import { Metadata, ResolvingMetadata } from 'next';
 export async function generateStaticParams() {
   const postIds = getAllPostIds();
   return postIds.map(params => ({
-    id: encodeURIComponent(params.id)
+    id: params.id,
   }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }>  } ): Promise<Metadata> {
   try {
-    const {id} = await params;
-    const decodedId = decodeURIComponent(id);
-    const post = getPostData(decodedId);
-    
+    const {id} = await params; 
+    const post = getPostData(id); 
     return {
       title: post.title,
     };
@@ -32,11 +30,8 @@ export default async function PostPage({
   params: Promise<{ id: string }> 
 }) {
   try {
-    const resolvedParams = await params;
-    const decodedId = decodeURIComponent(resolvedParams.id);
-    const post = await getPostData(decodedId);
-
-    console.log('Post data:', post); // Debugging line
+    const resolvedParams = await params; 
+    const post = await getPostData(resolvedParams.id); 
 
     return (
       <div className="container mx-auto py-8 px-4">

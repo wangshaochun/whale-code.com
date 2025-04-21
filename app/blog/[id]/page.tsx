@@ -35,7 +35,9 @@ export default async function PostPage({
     const resolvedParams = await params;
     const decodedId = decodeURIComponent(resolvedParams.id);
     const post = await getPostData(decodedId);
-    
+
+    console.log('Post data:', post); // Debugging line
+
     return (
       <div className="container mx-auto py-8 px-4">
         <Link href="/blog" className="text-blue-600 hover:underline mb-6 inline-block">
@@ -51,6 +53,7 @@ export default async function PostPage({
       </div>
     );
   } catch (error) {
+    console.error('Error loading blog post:', error);
     return (
       <div className="container mx-auto py-8 px-4">
         <Link href="/blog" className="text-blue-600 hover:underline mb-6 inline-block">

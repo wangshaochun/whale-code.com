@@ -47,6 +47,30 @@ const products = [
     link: ""
   },
   {
+    titleKey: 'product1Title' as TranslationKey,
+    descriptionKey: 'product1Desc' as TranslationKey,
+    image: "/images/dashuju.png",
+    link: ""
+  }, 
+  {
+    titleKey: 'product3Title' as TranslationKey,
+    descriptionKey: 'product3Desc' as TranslationKey,
+    image: "/images/zhaopin.png",
+    link: ""
+  },
+  {
+    titleKey: 'product4Title' as TranslationKey,
+    descriptionKey: 'product4Desc' as TranslationKey,
+    image: "/images/crm.jpg",
+    link: ""
+  },
+  {
+    titleKey: 'product5Title' as TranslationKey,
+    descriptionKey: 'product5Desc' as TranslationKey,
+    image: "/images/audit-wiki.png",
+    link: ""
+  },
+  {
     titleKey: 'product6Title' as TranslationKey,
     descriptionKey: 'product6Desc' as TranslationKey,
     image: "/images/voicecanvas.png",
@@ -469,7 +493,7 @@ export default function Home() {
       
 
       {/* Core Team Section */}
-      <section id="team" className="py-20 bg-muted/50">
+      {/* <section id="team" className="py-20 bg-muted/50">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -517,7 +541,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

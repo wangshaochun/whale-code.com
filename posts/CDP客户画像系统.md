@@ -11,12 +11,10 @@ date: '2024-01-03'
 **技术栈** `spring-boot`、`elasticsearch`、`mysql`、`xxl-job`
 
 ----
+----
 
 ![](/upload/2024110601.png)
-人群画像
 
 ![](/upload/2024110602.png)
-单客户画像
 
 ![](/upload/2024110603.png)
-规则设置

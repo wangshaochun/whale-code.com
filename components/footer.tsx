@@ -21,13 +21,22 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">{t('businessCooperation')}</h4>
             <p className="text-sm text-muted-foreground flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  15614392011 <br/>
-                  13780200356
+                  156-1439-2011 <br/>
+                  137-8020-0356
             </p>
           </div> 
             <div className="flex flex-col space-y-4 md:items-end"> 
                 <Image 
-                  src="/weixin.jpg" 
+                  src="/weixin-qrcode.jpg" 
+                  alt="WeChat QR Code" 
+                  width={120} 
+                  height={120} 
+                  className="rounded-md"
+                />
+            </div> 
+            <div className="flex flex-col space-y-4 md:items-end">  
+                 <Image 
+                  src="/weixin-qrcode1.jpg" 
                   alt="WeChat QR Code" 
                   width={120} 
                   height={120} 

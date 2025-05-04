@@ -79,7 +79,14 @@
   }
   
   pre {
-    @apply p-4 my-4 rounded-lg bg-muted overflow-x-auto;
+    @apply p-6 my-6 rounded-lg bg-muted overflow-x-auto border border-border relative;
+    code {
+      @apply text-sm leading-loose;
+    }
+    &[data-language]::before {
+      @apply absolute top-3 right-3 text-xs text-muted-foreground px-2 py-1 rounded bg-background/50;
+      content: attr(data-language);
+    }
   }
   
   code {
@@ -89,6 +96,31 @@
   pre code {
     @apply p-0 bg-transparent;
   }
+  
+  blockquote {
+    @apply pl-6 my-6 border-l-4 border-primary italic;
+    
+    blockquote {
+      @apply border-muted;
+    }
+    
+    p {
+      @apply text-muted-foreground;
+    }
+    
+    ul, ol {
+      @apply my-2;
+    }
+  }
+  
+  ol,
+  ul,
+  menu {
+    list-style: disc;
+    margin: 5px;
+    padding: 2px;
+  }
+  
 }
 
 @layer components {

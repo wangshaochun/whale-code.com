@@ -82,16 +82,16 @@ export const translations = {
   },
   zh: {
     // 元数据
-    metaTitle: '鲸码科技 - 通过AI创新赋能企业',
+    metaTitle: '鲸码互联 - 通过AI创新赋能企业',
     metaDescription: '通过AI创新赋能企业',
     
     // 标题
-    companyName: '鲸码科技',
+    companyName: '鲸码互联',
     // 首页
     heroTitle1: '通过AI赋能企业创新',
     heroTitle2: '用AI改变您的业务',
     heroTitle3: '技术的未来',
-    heroDescription: '我们专注于AI应用与办公程序开发，以技术为核心，助力企业高效发展。',
+    heroDescription: '我们专注于AI应用与定制化程序开发，助力企业高效发展。',
     getStarted: '开始使用',
     learnMore: '了解更多',
     
@@ -113,11 +113,11 @@ export const translations = {
     // 产品部分
     ourProducts: '我们的项目',
     product1Title: '数据中台项目',
-    product1Desc: '某集团超市数据标准化与服务化的标准体系建设',
+    product1Desc: '某集团超市CDP数据标准与服务化体系建设',
     product2Title: 'AI工作流自动化平台',
     product2Desc: '基于n8n打造智能工作流平台',
     product3Title: '小程序开发',
-    product3Desc: '企业招聘小程序、本地帮手小程序',
+    product3Desc: '某本地生活帮手小程序',
     product4Title: 'CRM系统',
     product4Desc: '企业贷款CRM系统开发',
     product5Title: '知识库平台',
@@ -126,10 +126,10 @@ export const translations = {
     product6Desc: '40余种语言即时文本转语音，支持声音克隆，基于先进AI技术实现清晰自然的语音合成',
     
     // 关于部分
-    aboutUs: '鲸码科技®',
+    aboutUs: '鲸码互联®',
     aboutDesc: '通过我们全面的AI产品和服务套件，我们使组织能够充分发挥人工智能的潜力，我们专注于教育、创新和实际应用，确保我们的客户在快速发展的技术环境中保持领先地位',
     ourVision: '我们的愿景',
-    visionDesc: '鲸码科技®致力于普及人工智能技术，使其对全球企业和个人都可访问且有益。我们相信AI的变革力量可以创造一个更高效、更创新、更互联的世界。',
+    visionDesc: '鲸码互联®致力于普及人工智能技术，使其对全球企业和个人都可访问且有益。我们相信AI的变革力量可以创造一个更高效、更创新、更互联的世界。',
     ourMission: '我们的使命',
     missionDesc: '我们的使命是通过AI创新赋能企业和个人，创造一个更好的未来。',
     

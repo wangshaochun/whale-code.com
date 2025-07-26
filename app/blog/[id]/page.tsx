@@ -3,6 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import { Metadata, ResolvingMetadata } from 'next';
 
+// 强制动态渲染以确保元数据正确更新
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   const postIds = getAllPostIds();
   return postIds.map(params => ({
@@ -31,7 +34,7 @@ export default async function PostPage({
 }) {
   try {
     const resolvedParams = await params; 
-    const post = await getPostData(resolvedParams.id); 
+    const post = getPostData(resolvedParams.id); 
 
     return (
       <div className="container mx-auto py-8 px-4">

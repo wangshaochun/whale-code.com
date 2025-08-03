@@ -61,13 +61,13 @@ const products = [
   {
     titleKey: 'product4Title' as TranslationKey,
     descriptionKey: 'product4Desc' as TranslationKey,
-    image: "/images/crm.jpg",
+    image: "/images/law.jpg",
     link: ""
   },
   {
     titleKey: 'product5Title' as TranslationKey,
     descriptionKey: 'product5Desc' as TranslationKey,
-    image: "/images/audit-wiki.png",
+    image: "/images/zfile.svg",
     link: ""
   },
   {

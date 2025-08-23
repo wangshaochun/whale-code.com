@@ -2,7 +2,7 @@ import { getAllPostIds, getPostData } from '@/lib/posts';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import { Metadata, ResolvingMetadata } from 'next';
-
+import remarkGfm from 'remark-gfm';
 // 强制动态渲染以确保元数据正确更新
 export const dynamic = 'force-dynamic';
 
@@ -41,12 +41,12 @@ export default async function PostPage({
         <Link href="/blog" className="text-blue-600 hover:underline mb-6 inline-block">
           ← 返回博客列表
         </Link>
-        <article className="prose lg:prose-xl mx-auto">
+        <article className="prose lg:prose-xl mx-auto markdown-body">
           <h1 className="text-4xl text-center">{post.title}</h1>
           {post.date && (
-            <time className="text-gray-500 block mb-8">{post.date}</time>
+            <time className="text-gray-500 block mb-8">发布时间：{post.date}</time>
           )}
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+         <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
         </article>
       </div>
     );

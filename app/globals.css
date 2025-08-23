@@ -128,3 +128,18 @@
     @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
 }
+.markdown-body h1 {
+  font-size: 2.25rem;
+  font-weight: bold;
+  margin: 2rem 0 1rem 0;
+}
+.markdown-body h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem 0;
+}
+.markdown-body h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 1.2rem 0 0.8rem 0;
+}

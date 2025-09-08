@@ -82,11 +82,11 @@ export const translations = {
   },
   zh: {
     // 元数据
-    metaTitle: '石家庄鲸码互联网科技 - 通过AI创新赋能企业',
+    metaTitle: '鲸码互联 - 通过AI创新赋能企业',
     metaDescription: '通过AI创新赋能企业',
     
     // 标题
-    companyName: '石家庄鲸码互联网科技',
+    companyName: '鲸码互联',
     // 首页
     heroTitle1: '通过AI赋能企业创新',
     heroTitle2: '用AI改变您的业务',

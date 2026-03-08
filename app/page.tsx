@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, Globe, Code, Newspaper, Mic2, Navigation, Briefcase } from 'lucide-react';
+import { Sparkles, DollarSign, Clock, Users, Palette, HeadphonesIcon } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
@@ -41,40 +41,28 @@ const rotateAnimation = {
 
 const products = [
   {
-    titleKey: 'product2Title' as TranslationKey,
-    descriptionKey: 'product2Desc' as TranslationKey,
-    image: "/images/n8n.jpg",
+    titleKey: 'dataMiddlePlatformTitle' as TranslationKey,
+    descriptionKey: 'dataMiddlePlatformDesc' as TranslationKey,
+    image: "/images/data-middle-platform.svg",
     link: ""
   },
   {
-    titleKey: 'product1Title' as TranslationKey,
-    descriptionKey: 'product1Desc' as TranslationKey,
-    image: "/images/dashuju.png",
-    link: ""
-  }, 
-  {
-    titleKey: 'product3Title' as TranslationKey,
-    descriptionKey: 'product3Desc' as TranslationKey,
-    image: "/images/zhaopin.png",
+    titleKey: 'auditKnowledgeTitle' as TranslationKey,
+    descriptionKey: 'auditKnowledgeDesc' as TranslationKey,
+    image: "/images/audit-wiki.png",
     link: ""
   },
   {
-    titleKey: 'product4Title' as TranslationKey,
-    descriptionKey: 'product4Desc' as TranslationKey,
-    image: "/images/law.jpg",
+    titleKey: 'textbookSelectionTitle' as TranslationKey,
+    descriptionKey: 'textbookSelectionDesc' as TranslationKey,
+    image: "/images/textbook.png",
     link: ""
   },
   {
-    titleKey: 'product5Title' as TranslationKey,
-    descriptionKey: 'product5Desc' as TranslationKey,
-    image: "/images/zfile.svg",
+    titleKey: 'intelligentMonitorTitle' as TranslationKey,
+    descriptionKey: 'intelligentMonitorDesc' as TranslationKey,
+    image: "/images/intelligent-monitoring.svg",
     link: ""
-  },
-  {
-    titleKey: 'product6Title' as TranslationKey,
-    descriptionKey: 'product6Desc' as TranslationKey,
-    image: "/images/voicecanvas.png",
-    link: "https://voicecanvas.org"
   }
 ];
 
@@ -287,34 +275,34 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
                {
-                icon: Navigation,
-                title: t('aiNavigatorTitle'),
-                description: t('aiNavigatorDesc')
+                icon: Sparkles,
+                title: t('service1Title'),
+                description: t('service1Desc')
               },
               {
-                icon: Globe,
-                title: t('aiTranslationTitle'),
-                description: t('aiTranslationDesc')
+                icon: DollarSign,
+                title: t('service2Title'),
+                description: t('service2Desc')
               },
               {
-                icon: Mic2,
-                title: t('aiVoiceTitle'),
-                description: t('aiVoiceDesc')
+                icon: Clock,
+                title: t('service3Title'),
+                description: t('service3Desc')
               },
               {
-                icon: Newspaper,
-                title: t('aiNewsTitle'),
-                description: t('aiNewsDesc')
+                icon: Users,
+                title: t('service4Title'),
+                description: t('service4Desc')
               },
               {
-                icon: Briefcase,
-                title: t('aiResearchTitle'),
-                description: t('aiResearchDesc')
+                icon: Palette,
+                title: t('service5Title'),
+                description: t('service5Desc')
               },
               {
-                icon: Code,
-                title: t('aiProgrammingTitle'),
-                description: t('aiProgrammingDesc')
+                icon: HeadphonesIcon,
+                title: t('service6Title'),
+                description: t('service6Desc')
               }
             ].map((service, index) => (
               <motion.div
@@ -435,7 +423,7 @@ export default function Home() {
             >
               <div className="relative aspect-video overflow-hidden rounded-xl">
                 <Image
-                  src="/images/about-us.jpg"
+                  src="/images/about-us.svg"
                   alt="AI Innovation and Education"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

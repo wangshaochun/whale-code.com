@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <style>
+      .box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
+      .text { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #334155; }
+      .title { font-weight: bold; font-size: 16px; fill: #0f172a; }
+      .arrow { stroke: #94a3b8; stroke-width: 2; marker-end: url(#head); }
+      .error { fill: #ef4444; }
+      .success { fill: #22c55e; }
+      .bg-error { fill: #fef2f2; stroke: #fca5a5; }
+      .bg-success { fill: #f0fdf4; stroke: #86efac; }
+      .code { font-family: monospace; font-size: 13px; fill: #475569; }
+    </style>
+    <marker id="head" orient="auto" markerWidth="3" markerHeight="4" refX="0.1" refY="2">
+      <path d="M0,0 V4 L2,2 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Left Side: Incorrect Flow -->
+  <g transform="translate(50, 50)">
+    <rect width="300" height="300" class="box bg-error" />
+    <text x="150" y="30" text-anchor="middle" class="title error">❌ 错误配置 (无结尾 /)</text>
+    
+    <rect x="50" y="60" width="200" height="40" class="box" />
+    <text x="150" y="85" text-anchor="middle" class="text">客户端</text>
+    <text x="150" y="105" text-anchor="middle" class="code">/prod-api/auth4a/logout</text>
+
+    <line x1="150" y1="110" x2="150" y2="150" class="arrow" />
+
+    <rect x="50" y="150" width="200" height="40" class="box" />
+    <text x="150" y="175" text-anchor="middle" class="text">Nginx (proxy_pass http://server)</text>
+    <text x="150" y="195" text-anchor="middle" class="code">转发保留前缀</text>
+
+    <line x1="150" y1="200" x2="150" y2="240" class="arrow" />
+
+    <rect x="50" y="240" width="200" height="40" class="box" />
+    <text x="150" y="265" text-anchor="middle" class="text">网关 (白名单忽略)</text>
+    <text x="150" y="285" text-anchor="middle" class="code error">/prod-api/auth4a/logout != /auth4a/**</text>
+  </g>
+
+  <!-- Right Side: Correct Flow -->
+  <g transform="translate(450, 50)">
+    <rect width="300" height="300" class="box bg-success" />
+    <text x="150" y="30" text-anchor="middle" class="title success">✓ 正确配置 (带结尾 /)</text>
+
+    <rect x="50" y="60" width="200" height="40" class="box" />
+    <text x="150" y="85" text-anchor="middle" class="text">客户端</text>
+    <text x="150" y="105" text-anchor="middle" class="code">/prod-api/auth4a/logout</text>
+
+    <line x1="150" y1="110" x2="150" y2="150" class="arrow" />
+
+    <rect x="50" y="150" width="200" height="40" class="box" />
+    <text x="150" y="175" text-anchor="middle" class="text">Nginx (proxy_pass http://server/)</text>
+    <text x="150" y="195" text-anchor="middle" class="code">转发去除前缀</text>
+
+    <line x1="150" y1="200" x2="150" y2="240" class="arrow" />
+
+    <rect x="50" y="240" width="200" height="40" class="box" />
+    <text x="150" y="265" text-anchor="middle" class="text">网关 (匹配并放行)</text>
+    <text x="150" y="285" text-anchor="middle" class="code success">/auth4a/logout 匹配 /auth4a/**</text>
+  </g>
+</svg>

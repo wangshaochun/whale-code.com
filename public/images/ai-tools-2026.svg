@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; rx: 12; }
+      .title { font-family: system-ui, -apple-system, sans-serif; font-size: 24px; font-weight: 800; fill: #0f172a; }
+      .subtitle { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; fill: #64748b; }
+      .section-title { font-family: system-ui, -apple-system, sans-serif; font-size: 18px; font-weight: bold; }
+      .paid-title { fill: #b91c1c; }
+      .free-title { fill: #15803d; }
+      
+      .card { fill: #ffffff; stroke: #e2e8f0; stroke-width: 2; rx: 8; }
+      .card-paid-border { fill: #ef4444; }
+      .card-free-border { fill: #22c55e; }
+      
+      .tool-name { font-family: system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
+      .tool-desc { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; fill: #64748b; }
+      
+      .cost-badge { fill: #fee2e2; rx: 12; }
+      .cost-text { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: bold; fill: #b91c1c; }
+      
+      .free-badge { fill: #dcfce7; rx: 12; }
+      .free-text { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; font-weight: bold; fill: #15803d; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" class="bg" />
+  
+  <!-- Header -->
+  <text x="400" y="45" text-anchor="middle" class="title">🚀 2026年3月 AI 编程工具栈</text>
+  <text x="400" y="65" text-anchor="middle" class="subtitle">个人效率工具与成本清单</text>
+
+  <!-- 收费区 -->
+  <text x="200" y="110" text-anchor="middle" class="section-title paid-title">💰 收费工具 (总计: ~300元/月)</text>
+  
+  <!-- 收费卡片 1 -->
+  <g transform="translate(50, 130)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-paid-border" />
+    <text x="20" y="24" class="tool-name">GitHub Copilot</text>
+    <text x="20" y="44" class="tool-desc">IDE完美集成，小功能实现极强</text>
+    <rect x="230" y="15" width="60" height="24" class="cost-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="cost-text">¥70/月</text>
+  </g>
+
+  <!-- 收费卡片 2 -->
+  <g transform="translate(50, 195)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-paid-border" />
+    <text x="20" y="24" class="tool-name">Cursor</text>
+    <text x="20" y="44" class="tool-desc">绝佳内置提示词，极高效率推荐</text>
+    <rect x="230" y="15" width="60" height="24" class="cost-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="cost-text">¥140/月</text>
+  </g>
+
+  <!-- 收费卡片 3 -->
+  <g transform="translate(50, 260)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-paid-border" />
+    <text x="20" y="24" class="tool-name">Claude Code</text>
+    <text x="20" y="44" class="tool-desc">Obsidian集成，随手终端问答</text>
+    <rect x="230" y="15" width="60" height="24" class="cost-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="cost-text">¥50/月</text>
+  </g>
+  
+  <!-- 收费卡片 4 -->
+  <g transform="translate(50, 325)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-paid-border" />
+    <text x="20" y="24" class="tool-name">Open Code</text>
+    <text x="20" y="44" class="tool-desc">平替工具，国内API响应极佳</text>
+    <rect x="230" y="15" width="60" height="24" class="cost-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="cost-text">¥40/月</text>
+  </g>
+
+  <!-- 免费区 -->
+  <text x="600" y="110" text-anchor="middle" class="section-title free-title">✨ 免费工具 (日常辅助组合)</text>
+
+  <!-- 免费卡片 1 -->
+  <g transform="translate(450, 130)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-free-border" />
+    <text x="20" y="24" class="tool-name">Gemini</text>
+    <text x="20" y="44" class="tool-desc">信息时效性出众、客观解答与生图</text>
+    <rect x="230" y="15" width="60" height="24" class="free-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="free-text">Free</text>
+  </g>
+
+  <!-- 免费卡片 2 -->
+  <g transform="translate(450, 195)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-free-border" />
+    <text x="20" y="24" class="tool-name">DeepSeek</text>
+    <text x="20" y="44" class="tool-desc">出色的代码问题排查与逻辑推理</text>
+    <rect x="230" y="15" width="60" height="24" class="free-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="free-text">Free</text>
+  </g>
+
+  <!-- 免费卡片 3 -->
+  <g transform="translate(450, 260)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-free-border" />
+    <text x="20" y="24" class="tool-name">ChatGPT</text>
+    <text x="20" y="44" class="tool-desc">经典全能助手，日常交叉比对验证</text>
+    <rect x="230" y="15" width="60" height="24" class="free-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="free-text">Free</text>
+  </g>
+
+  <!-- 免费卡片 4 -->
+  <g transform="translate(450, 325)">
+    <rect width="300" height="55" class="card" />
+    <path d="M 0 8 Q 0 0 8 0 L 8 0 L 8 55 L 8 55 Q 0 55 0 47 Z" class="card-free-border" />
+    <text x="20" y="24" class="tool-name">豆包</text>
+    <text x="20" y="44" class="tool-desc">手机端便捷对话，通勤碎片化检索</text>
+    <rect x="230" y="15" width="60" height="24" class="free-badge"/>
+    <text x="260" y="32" text-anchor="middle" class="free-text">Free</text>
+  </g>
+
+</svg>

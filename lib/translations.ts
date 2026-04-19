@@ -157,7 +157,7 @@ export const translations = {
     about: '关于',
     
     // 页脚
-    footerDesc: '通过AI创新赋能企业',
+    footerDesc: '石家庄市桥西区鸿锐大厦2号楼1105室',
     footerFollow: '联系我们',
     footerRights: '版权所有',
     businessCooperation: '商务合作',

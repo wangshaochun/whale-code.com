@@ -52,12 +52,12 @@ const products = [
     image: "/images/audit-wiki.png",
     link: ""
   },
-  {
-    titleKey: 'textbookSelectionTitle' as TranslationKey,
-    descriptionKey: 'textbookSelectionDesc' as TranslationKey,
-    image: "/images/textbook.png",
-    link: ""
-  },
+  // {
+  //   titleKey: 'textbookSelectionTitle' as TranslationKey,
+  //   descriptionKey: 'textbookSelectionDesc' as TranslationKey,
+  //   image: "/images/textbook.png",
+  //   link: ""
+  // },
   {
     titleKey: 'intelligentMonitorTitle' as TranslationKey,
     descriptionKey: 'intelligentMonitorDesc' as TranslationKey,

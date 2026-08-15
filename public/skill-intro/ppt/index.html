@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jingma-ppt-skill · 一份 HTML 搞定你的网页 PPT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Patrick+Hand&family=Comic+Neue:wght@400;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ============ 主题色(默认:🍓 草莓粉) ============
+       切换主题:从 references/themes-cartoon.md 复制对应的 :root 块
+       整体替换这几行(--anchor / --anchor-rgb / --candy-2 / --candy-3 / --paper / --paper-rgb / --doodle-ink)
+       其他地方散落的 rgba() 都走 var(--anchor-rgb) / var(--paper-rgb) */
+    --anchor:#7c5cff;
+    --anchor-rgb:124,92,255;
+    --candy-2:#ff8fb1;       /* 辅色 1:草莓粉 */
+    --candy-3:#4fd1c5;       /* 辅色 2:薄荷绿 */
+    --paper:#f7f6ff;         /* 纸张米白底 */
+    --paper-rgb:247,246,255;
+    --paper-tint:#eeeaff;
+    --doodle-ink:#2f2f3a;    /* 手绘线 / 描边色 */
+    --candy-bg:#f0edff;       /* candy 主题页背景 */
+    --candy-bg-rgb:240,237,255;
+
+    /* ============ 字体(跨主题固定) ============ */
+    --hand-zh:"ZCOOL KuaiLe","Comic Sans MS","Microsoft YaHei UI",system-ui,cursive;
+    --hand-en:"Patrick Hand","Comic Neue","Comic Sans MS",system-ui,cursive;
+    --num:"Fredoka","Comic Neue","Comic Sans MS",system-ui,sans-serif;
+    --meta:"Patrick Hand","Comic Neue",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--anchor);color:var(--doodle-ink);font-family:var(--hand-zh);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  /* ============ Canvas 蜡笔纸背景 ============ */
+  canvas.bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block;transition:opacity 1.2s ease}
+  body.low-power canvas.bg{display:none!important}
+
+  /* ============ Deck 容器 + 翻页 ============ */
+  #deck{position:fixed;inset:0;width:10000vw;height:100vh;display:flex;flex-wrap:nowrap;transition:transform .8s cubic-bezier(.34,1.56,.64,1);z-index:10;will-change:transform}
+  .slide{width:100vw;height:100vh;flex:0 0 100vw;position:relative;padding:7vh 7vw 11vh 7vw;display:flex;flex-direction:column;overflow:hidden}
+  .slide.paper{color:var(--doodle-ink);background:var(--paper)}
+  .slide.candy{color:var(--doodle-ink);background:var(--candy-bg)}
+  .slide.hero.paper{background:var(--paper-tint)}
+  .slide.hero.candy{background:var(--anchor);color:var(--paper)}
+  .slide.hero.candy .h-hero{color:var(--paper)}
+  .slide.hero.candy .lead{color:rgba(255,255,255,.88)}
+
+  /* ============ 排版类 ============ */
+  .h-hero{font-family:var(--hand-zh);font-weight:400;font-size:min(6.4vw,11vh);line-height:1.15;letter-spacing:-.01em}
+  .h-xl{font-family:var(--hand-zh);font-weight:400;font-size:min(5vw,8.8vh);line-height:1.2}
+  .h-sub{font-family:var(--hand-en);font-weight:400;font-size:min(3.4vw,6vh);line-height:1.25}
+  .h-md{font-family:var(--hand-zh);font-weight:500;font-size:min(2.6vw,4.6vh);line-height:1.3}
+  .lead{font-family:var(--hand-en);font-weight:400;font-size:max(20px,2vw);line-height:1.55;color:var(--doodle-ink)}
+  .kicker-hand{font-family:var(--meta);letter-spacing:.18em;text-transform:uppercase;font-size:14px;color:rgba(var(--anchor-rgb),.95);font-weight:700}
+  .meta-tag{font-family:var(--meta);font-size:14px;color:var(--doodle-ink);opacity:.7}
+  .num{font-family:var(--num);font-weight:700}
+
+  /* ============ 卡片 / 容器 ============ */
+  .paper-card{background:#fff;border-radius:24px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:5vh 4vw}
+  .polaroid-card{background:#fff;border-radius:6px;padding:14px 14px 44px;box-shadow:0 14px 28px rgba(0,0,0,.18);position:relative}
+  .polaroid-card img{display:block;width:100%;height:100%;object-fit:cover;border-radius:2px}
+  .polaroid-card .pad-caption{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-family:var(--hand-en);font-size:16px;color:var(--doodle-ink)}
+  .chrome-sketch{position:absolute;top:3vh;right:6vw;font-family:var(--meta);font-size:14px;color:var(--doodle-ink);opacity:.55}
+  .card-paper{background:#fff;border-radius:22px;box-shadow:0 12px 32px rgba(0,0,0,.16);padding:4vh 3vw}
+  .card-candy{background:var(--anchor);color:var(--paper);border-radius:22px;padding:4vh 3vw}
+  .card-bubble{background:#fff;border:3px dashed var(--doodle-ink);border-radius:24px;padding:4vh 3vw}
+
+  /* ============ 装饰贴纸 ============ */
+  .sticker{position:absolute;display:inline-flex;align-items:center;justify-content:center;font-family:var(--hand-en);font-size:14px;font-weight:700;color:var(--paper);background:var(--anchor);padding:8px 16px;border-radius:999px;transform:rotate(-6deg);box-shadow:0 6px 14px rgba(0,0,0,.18)}
+  .sticker-round{width:84px;height:84px;border-radius:50%;background:var(--candy-2);color:var(--doodle-ink);font-family:var(--hand-en);font-size:14px;font-weight:700;padding:0;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1}
+  .sticker-star{width:96px;height:96px;color:var(--candy-3);filter:drop-shadow(0 6px 12px rgba(0,0,0,.15))}
+  .sticker-heart{width:80px;height:80px;color:var(--anchor);filter:drop-shadow(0 6px 12px rgba(0,0,0,.15))}
+  .sticker-burst{width:140px;height:140px;color:var(--anchor);filter:drop-shadow(0 8px 16px rgba(0,0,0,.15))}
+  .tape{position:absolute;width:120px;height:30px;background:linear-gradient(135deg,var(--candy-2),var(--candy-3));opacity:.85;transform:rotate(-8deg);box-shadow:0 4px 10px rgba(0,0,0,.12)}
+  .washi-tape{position:absolute;width:160px;height:28px;background:repeating-linear-gradient(45deg,var(--candy-2) 0 10px,var(--candy-3) 10px 20px);opacity:.9;transform:rotate(6deg)}
+  .paperclip{width:34px;height:50px;color:var(--doodle-ink)}
+  .pad-note{background:var(--candy-2);color:var(--doodle-ink);padding:4vh 3vw;border-radius:6px;box-shadow:0 12px 24px rgba(0,0,0,.16);font-family:var(--hand-en);font-size:max(18px,1.6vw);line-height:1.5;position:relative}
+  .pad-note::before{content:"";position:absolute;left:50%;top:-12px;width:60px;height:18px;background:rgba(var(--anchor-rgb),.55);border-radius:4px;transform:translateX(-50%) rotate(-3deg)}
+  .ticket{background:#fff;border:2px dashed var(--doodle-ink);border-radius:14px;padding:4vh 3vw;position:relative}
+  .ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:24px;height:24px;background:var(--paper);border:2px solid var(--doodle-ink);border-radius:50%;transform:translateY(-50%)}
+  .ticket::before{left:-14px}.ticket::after{right:-14px}
+  .stamp{display:inline-block;background:var(--candy-3);color:var(--paper);padding:8px 14px;font-family:var(--hand-en);font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;transform:rotate(-4deg);box-shadow:0 6px 14px rgba(0,0,0,.15);font-size:14px}
+  .doodle-line{display:block;width:100%;height:8px;color:var(--doodle-ink)}
+  .doodle-arrow{position:absolute;color:var(--doodle-ink)}
+  .sparkle{position:absolute;color:var(--candy-2);width:48px;height:48px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.15))}
+  .speech-bubble{position:relative;background:#fff;border:3px solid var(--doodle-ink);border-radius:24px;padding:3vh 3vw;font-family:var(--hand-en);font-size:max(18px,1.5vw);line-height:1.4;box-shadow:0 12px 24px rgba(0,0,0,.12)}
+  .speech-bubble::after{content:"";position:absolute;left:34px;bottom:-22px;width:24px;height:24px;background:#fff;border-right:3px solid var(--doodle-ink);border-bottom:3px solid var(--doodle-ink);transform:rotate(35deg)}
+
+  /* ============ 网格 ============ */
+  .grid-stickers{display:grid;grid-template-columns:repeat(2,1fr);gap:3vh 3vw;align-items:start}
+  .grid-stickers.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid-stickers.cols-4{grid-template-columns:repeat(4,1fr)}
+  .grid-pads{display:grid;grid-template-columns:repeat(2,1fr);gap:4vh 4vw;align-items:start}
+  .grid-pads.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid-polaroid{display:grid;grid-template-columns:repeat(2,1fr);gap:4vh 5vw;align-items:start}
+  .grid-polaroid.cols-3{grid-template-columns:repeat(3,1fr)}
+  .grid-polaroid.cols-4{grid-template-columns:repeat(4,1fr)}
+  .grid-polaroid .polaroid-card:nth-child(even){transform:rotate(3deg)}
+  .grid-polaroid .polaroid-card:nth-child(odd){transform:rotate(-3deg)}
+  .grid-polaroid .polaroid-card:only-child{transform:rotate(0)}
+
+  /* ============ 数据 / 图表 ============ */
+  .balloon-row{display:flex;gap:4vw;align-items:flex-end;justify-content:center;flex-wrap:wrap}
+  .pop-balloon{display:flex;flex-direction:column;align-items:center;gap:1.2vh}
+  .pop-balloon .balloon{width:10vw;max-width:160px;aspect-ratio:1;border-radius:50% 50% 50% 50% / 55% 55% 45% 45%;background:var(--anchor);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--num);font-weight:700;font-size:min(4vw,7vh)}
+  .pop-balloon:nth-child(2n) .balloon{background:var(--candy-2);color:var(--doodle-ink)}
+  .pop-balloon:nth-child(3n) .balloon{background:var(--candy-3);color:var(--paper)}
+  .pop-balloon .balloon-label{font-family:var(--hand-en);font-size:max(16px,1.4vw);color:var(--doodle-ink)}
+  .candy-bar-row{display:flex;gap:1vw;align-items:flex-end;justify-content:center}
+  .candy-bar{display:flex;flex-direction:column;align-items:center;gap:1.2vh;justify-content:flex-end}
+  .candy-bar .bar{width:9vw;max-width:120px;background:var(--anchor);border-radius:14px 14px 4px 4px;min-height:6vh}
+  .candy-bar:nth-child(2n) .bar{background:var(--candy-2)}
+  .candy-bar:nth-child(3n) .bar{background:var(--candy-3)}
+  .candy-bar .bar-label{font-family:var(--hand-en);font-size:max(14px,1.2vw)}
+  .candy-bar .bar-val{font-family:var(--num);font-weight:700}
+  .sticker-progress{display:flex;gap:8px;align-items:center}
+  .sticker-progress .pip{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--doodle-ink)}
+  .sticker-progress .pip.on{background:var(--anchor)}
+
+  /* ============ 角色装饰槽 ============ */
+  .mascot-slot{width:18vw;max-width:240px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:8%;background:rgba(255,255,255,.8);border:3px dashed var(--doodle-ink);border-radius:24px}
+  .mascot-slot img{width:100%;height:100%;object-fit:contain}
+
+  /* ============ 视觉呼吸 ============ */
+  .foot{position:absolute;bottom:3vh;left:6vw;right:6vw;display:flex;justify-content:space-between;font-family:var(--meta);font-size:14px;color:var(--doodle-ink);opacity:.6}
+  .nav-safe-bottom{margin-bottom:10vh}
+  .nav-safe-bottom-tight{margin-bottom:8vh}
+  .frame-img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+  .fit-contain{object-fit:contain}
+
+  /* ============ 演讲者模式 ============ */
+  body.presenter #deck{filter:none}
+  body.presenter .stage{position:fixed;inset:0;z-index:5;display:grid;grid-template-columns:1.1fr 1fr;gap:1vw;padding:1vw;background:var(--paper)}
+  body.presenter #deck{position:static;width:auto;height:auto;display:contents}
+  body.presenter .slide:not(.active){display:none}
+  body.presenter .speaker{display:flex}
+  body:not(.presenter) .speaker{display:none}
+  .speaker{position:fixed;inset:0;background:#23202a;color:#fff;display:none;grid-template-rows:auto 1fr auto;grid-template-columns:1fr 1fr;gap:1vh;padding:2vh;font-family:var(--hand-en)}
+  .speaker .sp-top{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;font-family:var(--meta);font-size:14px}
+  .speaker .sp-preview{grid-column:1;grid-row:2;background:#000;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .speaker .sp-next{grid-column:2;grid-row:2;background:#000;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+  .speaker .sp-next .label{position:absolute;top:1vh;left:1vh;background:var(--anchor);color:#fff;padding:4px 10px;border-radius:999px;font-family:var(--meta);font-size:12px}
+  .speaker .sp-notes{grid-column:1/3;grid-row:3;min-height:24vh;background:#fff;color:var(--doodle-ink);border-radius:14px;padding:2vh 1.5vw;font-family:var(--hand-en);font-size:17px;line-height:1.5;overflow:auto;white-space:pre-wrap}
+  .speaker iframe{width:100%;height:100%;border:0}
+
+  /* ============ ESC 索引网格 ============ */
+  #overview{position:fixed;inset:0;z-index:50;background:rgba(var(--paper-rgb),.96);display:none;grid-template-columns:repeat(4,1fr);gap:1.5vh 1.5vw;padding:6vh 4vw;overflow:auto;grid-auto-rows:minmax(20vh,auto)}
+  body.overview #overview{display:grid}
+  body presenter #deck{display:none}
+  .ov-card{background:#fff;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.14);overflow:hidden;display:flex;flex-direction:column}
+  .ov-card iframe{width:1600px;height:900px;transform:scale(.166);transform-origin:top left;border:0;pointer-events:none}
+  .ov-card .ov-num{padding:1vh 1vw;font-family:var(--meta);font-size:14px;color:var(--doodle-ink)}
+
+  /* ============ 分页导航 + 标识 + 提示 ============ */
+  #nav{position:fixed;bottom:1.4vh;right:1.6vw;z-index:20;display:flex;gap:1vw;align-items:center;font-family:var(--meta);font-size:13px;color:var(--doodle-ink);opacity:.75}
+  #nav button{font-family:var(--meta);font-size:13px;border:2px solid var(--doodle-ink);background:#fff;border-radius:999px;cursor:pointer;padding:4px 12px}
+  #brand{position:fixed;top:1.6vh;left:1.6vw;z-index:20;font-family:var(--meta);font-size:13px;color:var(--doodle-ink);opacity:.6}
+  #hint{position:fixed;bottom:1.4vh;left:1.6vw;z-index:20;font-family:var(--meta);font-size:13px;color:var(--doodle-ink);opacity:.55}
+  body.low-power #hint::after{content:" · B 静态已开"}
+  body.low-power #deck{filter:none}
+
+  /* ============ 动效 recipe 占位类(由 playSlide 注入) ============ */
+  [data-anim]{will-change:transform,opacity}
+  .motion-preload{position:fixed;width:0;height:0;visibility:hidden}
+
+</style>
+</head>
+<body>
+  <canvas class="bg" id="bg-paper"></canvas>
+
+  <div id="brand">jingma-ppt-skill · 用法速览</div>
+
+  <div id="deck">
+    <!-- SLIDES_HERE -->
+    <section class="slide hero candy" data-layout="K01" data-slide-id="cover">
+      <div class="chrome-sketch">deck · 01</div>
+      <div style="flex:1;display:grid;grid-template-columns:1.1fr 1fr;gap:5vw;align-items:center">
+        <div data-anim="bounce">
+          <div class="kicker-hand">A Cartoon Talk · jingma-ppt-skill</div>
+          <h1 class="h-hero" style="margin-top:2vh">把分享塞进<br>贴纸本里放映</h1>
+          <p class="lead" style="margin-top:2vh;max-width:36ch">一份单文件 HTML,三种杂志感/瑞士感/卡通感,扔进浏览器就能放映——这是这个 Skill 的用法速览。</p>
+        </div>
+        <div style="position:relative" data-anim="pop">
+          <div class="mascot-slot" style="margin:0 auto">
+            <!-- 替换成你的吉祥物 1:1 png,文件名建议 images/01-mascot.png -->
+            <span style="font-family:var(--hand-zh);font-size:max(28px,3vw);color:var(--doodle-ink)">👏i</span>
+          </div>
+          <div class="sparkle" style="top:-2vh;right:0">✨</div>
+          <div class="sparkle" style="bottom:-2vh;left:0">✨</div>
+        </div>
+      </div>
+      <div class="foot">
+        <span>.agents/skills/jingma-ppt-skill</span>
+        <span>00 · 开场</span>
+      </div>
+    </section>
+
+    <section class="slide paper" data-layout="K09" data-slide-id="what-is">
+      <div class="kicker-hand">Q &amp; A</div>
+      <h2 class="h-md" style="margin-top:2vh">它到底是个啥?三句话讲清楚</h2>
+      <div style="margin-top:5vh;display:grid;grid-template-columns:1fr 1fr;gap:4vh;align-items:start" class="nav-safe-bottom" data-anim="wobble">
+        <div class="speech-bubble" style="transform:rotate(-2deg)">一份能跑的单文件 HTML 版 PPT,带翻页、演讲者模式、观众屏同步——<strong>不需要服务器、不打包</strong>。</div>
+        <div class="speech-bubble" style="transform:rotate(2deg)" data-anim="float-up">内置三种风格 A 杂志 / B 瑞士 / C 卡通,各有 5/4/5 套主题色,从 layouts 骨架粘贴改文案即可。</div>
+      </div>
+      <div style="margin-top:5vh;display:grid;grid-template-columns:1fr;justify-items:center">
+        <div class="speech-bubble" style="max-width:62ch;transform:rotate(-1deg)" data-anim="float-up">配合 opencode / Claude Code / Codex 直接对话即可生成:agent 按 SKILL.md 的 7 问澄清 → 拷贝模板 → 填 layout → 自检 → 预览。</div>
+      </div>
+      <div class="foot"><span>01 · 它做啥</span><span>Q&amp;A</span></div>
+    </section>
+
+    <section class="slide candy" data-layout="K03" data-slide-id="hard-stats">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center">
+        <div class="kicker-hand" data-anim="float-up">BIG STAT</div>
+        <div class="balloon-row" style="margin-top:5vh" data-anim="pop">
+          <div class="pop-balloon">
+            <div class="balloon">3</div>
+            <div class="balloon-label">三种风格</div>
+          </div>
+          <div class="pop-balloon">
+            <div class="balloon">10</div>
+            <div class="balloon-label">每风格布局骨架</div>
+          </div>
+          <div class="pop-balloon">
+            <div class="balloon">P</div>
+            <div class="balloon-label">演讲者模式快捷键</div>
+          </div>
+        </div>
+        <p class="lead" style="margin-top:5vh;color:rgba(47,47,58,.9);max-width:46ch;margin-left:auto;margin-right:auto">单文件即播,WebGL/Canvas 背景在 hero 页透出,Lucide 图标 + Motion One 动效,断网自动降级可读。</p>
+      </div>
+      <div class="foot" style="color:rgba(47,47,58,.6)"><span>02 · 硬数据</span><span>SKILL.md 摘要</span></div>
+    </section>
+
+    <section class="slide hero paper" data-layout="K02" data-slide-id="act-two">
+      <div class="tape" style="top:6vh;left:8vw;transform:rotate(-12deg)"></div>
+      <div class="washi-tape" style="bottom:8vh;right:8vw;transform:rotate(8deg)"></div>
+      <div style="position:relative;flex:1;display:flex;flex-direction:column;justify-content:center">
+        <div class="kicker-hand">Act II · How to use</div>
+        <h2 class="h-xl" data-anim="wobble" style="margin-top:2vh">第二章 · 六步上线</h2>
+        <p class="lead" style="margin-top:2vh;max-width:48ch">从澄清需求到现场放映,这个章节只讲一件事:一份 deck 是怎么被一步步搭起来的。</p>
+      </div>
+      <div class="foot"><span>章节封</span><span>03 · Act</span></div>
+    </section>
+
+    <section class="slide paper" data-layout="K06" data-slide-id="workflow">
+      <div class="kicker-hand">Workflow · 三段</div>
+      <h2 class="h-md" style="margin-top:2vh">套在哪一段?读 SKILL.md 就够</h2>
+      <div class="grid-stickers cols-3 nav-safe-bottom" style="margin-top:5vh" data-anim="bounce">
+        <div class="paper-card" style="position:relative;padding-top:7vh">
+          <span class="sticker-round" style="position:absolute;top:-24px;left:50%;transform:translateX(-50%) rotate(-6deg)">01</span>
+          <h3 class="h-md">澄清需求</h3>
+          <p class="lead" style="font-size:max(16px,1.4vw);margin-top:1vh">7 问清单先对齐:风格 / 受众 / 时长 / 素材 / 图片 / 主题色 / 硬约束</p>
+        </div>
+        <div class="paper-card" style="position:relative;padding-top:7vh">
+          <span class="sticker-round" style="position:absolute;top:-24px;left:50%;transform:translateX(-50%) rotate(8deg);background:var(--candy-3);color:#fff">02</span>
+          <h3 class="h-md">拷贝填模板</h3>
+          <p class="lead" style="font-size:max(16px,1.4vw);margin-top:1vh">拷贝 template*.html,从 themes*.md 选 5/4/5 套主题色之一,再按 layouts*.md 粘 K01–K10 改文案</p>
+        </div>
+        <div class="paper-card" style="position:relative;padding-top:7vh">
+          <span class="sticker-round" style="position:absolute;top:-24px;left:50%;transform:translateX(-50%) rotate(4deg);background:var(--candy-2);color:var(--doodle-ink)">03</span>
+          <h3 class="h-md">自检 &amp; 预览</h3>
+          <p class="lead" style="font-size:max(16px,1.4vw);margin-top:1vh">跑 validate 脚本对照 checklist,然后浏览器打开 index.html,按 P 测演讲者模式</p>
+        </div>
+      </div>
+      <svg class="doodle-line" style="margin-top:6vh" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><path d="M0 2 Q 25 0 50 2 T 100 2" stroke="currentColor" stroke-width=".6" fill="none" stroke-linecap="round" stroke-dasharray="2 1.5"/></svg>
+      <div class="foot"><span>04 · 流程</span><span>三段</span></div>
+    </section>
+
+    <section class="slide paper" data-layout="K05" data-slide-id="styles-preview">
+      <div class="kicker-hand">Three Styles</div>
+      <h2 class="h-md" style="margin-top:2vh">A · B · C 三种风格 snapshot</h2>
+      <div class="grid-polaroid cols-3 nav-safe-bottom-tight" style="margin-top:5vh" data-anim="bounce">
+        <figure class="polaroid-card">
+          <img alt="A 杂志风占位" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23eeeaff'/%3E%3Ctext x='50' y='54' text-anchor='middle' font-family='cursive' font-weight='700' font-size='46' fill='%232f2f3a'%3EA%3C/text%3E%3Ctext x='50' y='76' text-anchor='middle' font-family='cursive' font-size='10' fill='%232f2f3a' opacity='.7'%3ESERIF%3C/text%3E%3C/svg%3E">
+          <figcaption class="pad-caption">A · 电子杂志 × 电子墨水</figcaption>
+        </figure>
+        <figure class="polaroid-card">
+          <img alt="B 瑞士风占位" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23eef0f4'/%3E%3Ctext x='50' y='56' text-anchor='middle' font-family='monospace' font-weight='700' font-size='44' fill='%232a2f3a' letter-spacing='2'%3EB%3C/text%3E%3Ctext x='50' y='78' text-anchor='middle' font-family='monospace' font-size='8' fill='%232a2f3a' letter-spacing='1'%3EGRID%3C/text%3E%3C/svg%3E">
+          <figcaption class="pad-caption">B · 瑞士国际主义</figcaption>
+        </figure>
+        <figure class="polaroid-card">
+          <img alt="C 卡通风占位" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0edff'/%3E%3Ctext x='50' y='56' text-anchor='middle' font-family='cursive' font-weight='700' font-size='48' fill='%237c5cff'%3EC%3C/text%3E%3Ctext x='50' y='78' text-anchor='middle' font-family='cursive' font-size='9' fill='%232f2f3a' opacity='.7'%3ESTICKER%3C/text%3E%3C/svg%3E">
+          <figcaption class="pad-caption">C · 卡通涂鸦</figcaption>
+        </figure>
+      </div>
+      <div class="foot"><span>05 · 风格快照</span><span>占位 · 可后期贴图</span></div>
+    </section>
+
+    <section class="slide candy" data-layout="K08" data-slide-id="scripts">
+      <div class="kicker-hand">Usage Mix · 校验脚本</div>
+      <h2 class="h-md" style="margin-top:2vh;color:var(--doodle-ink)">五条命令各管一段</h2>
+      <div style="margin-top:4vh;display:grid;grid-template-columns:38% 1fr 14%;row-gap:2.4vh;align-items:center" data-anim="bounce">
+        <div style="font-family:var(--hand-en);font-size:max(16px,1.4vw);color:var(--doodle-ink)">validate-presenter-mode</div>
+        <div style="display:flex;align-items:center;height:4vh"><div style="height:2.6vh;width:92%;background:var(--candy-2);border-radius:14px 14px 4px 4px"></div><div style="height:2.6vh;width:8%;background:transparent"></div></div>
+        <div class="num" style="color:var(--doodle-ink);font-size:max(16px,1.4vw)">共用</div>
+
+        <div style="font-family:var(--hand-en);font-size:max(16px,1.4vw);color:var(--doodle-ink)">validate-swiss-deck</div>
+        <div style="display:flex;align-items:center;height:4vh"><div style="height:2.6vh;width:64%;background:var(--candy-3);border-radius:14px 14px 4px 4px"></div></div>
+        <div class="num" style="color:var(--doodle-ink);font-size:max(16px,1.4vw)">B</div>
+
+        <div style="font-family:var(--hand-en);font-size:max(16px,1.4vw);color:var(--doodle-ink)">validate-cartoon-deck</div>
+        <div style="display:flex;align-items:center;height:4vh"><div style="height:2.6vh;width:64%;background:var(--candy-2);border-radius:14px 14px 4px 4px"></div></div>
+        <div class="num" style="color:var(--doodle-ink);font-size:max(16px,1.4vw)">C</div>
+
+        <div style="font-family:var(--hand-en);font-size:max(16px,1.4vw);color:var(--doodle-ink)">check-presenter-runtime-sync</div>
+        <div style="display:flex;align-items:center;height:4vh"><div style="height:2.6vh;width:42%;background:var(--anchor);border-radius:14px 14px 4px 4px;opacity:.9"></div></div>
+        <div class="num" style="color:var(--doodle-ink);font-size:max(16px,1.4vw)">漂移</div>
+
+        <div style="font-family:var(--hand-en);font-size:max(16px,1.4vw);color:var(--doodle-ink)">--target-minutes N</div>
+        <div style="display:flex;align-items:center;height:4vh"><div style="height:2.6vh;width:88%;background:var(--candy-3);border-radius:14px 14px 4px 4px;opacity:.85"></div></div>
+        <div class="num" style="color:var(--doodle-ink);font-size:max(16px,1.4vw)">时长</div>
+      </div>
+      <p class="lead" style="margin-top:5vh;color:rgba(47,47,58,.9);max-width:60ch;align-self:center;text-align:center">前两个能拦截页面 ID 错位、备注类型、版式登记与时长超 90% 预算;B 版会再跑 Playwright 渲染测量。</p>
+      <div class="foot" style="color:rgba(47,47,58,.6)"><span>06 · 校验</span><span>scripts/</span></div>
+    </section>
+
+    <section class="slide paper" data-layout="K07" data-slide-id="compare">
+      <div class="kicker-hand">Before / After</div>
+      <h2 class="h-md" style="margin-top:2vh">普通 PPT vs Web Deck</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;margin-top:5vh;align-items:start" class="nav-safe-bottom" data-anim="pop">
+        <div class="ticket" style="position:relative">
+          <div class="stamp" style="position:absolute;top:-1.5vh;right:-1vw;background:var(--doodle-ink);color:#fff;transform:rotate(8deg)">PPT</div>
+          <h3 class="h-md">本地 .pptx</h3>
+          <p class="lead" style="font-size:max(16px,1.4vw);margin-top:1vh">动效靠插件、贴纸要从图标库一个一个翻、多设备预览与会场投屏常常糊,版本同步靠手动管理</p>
+          <div class="sticker-progress" style="margin-top:2vh">
+            <span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          </div>
+        </div>
+        <div class="ticket" style="transform:rotate(2deg)">
+          <div class="stamp" style="position:absolute;top:-1.5vh;right:-1vw">WEB</div>
+          <h3 class="h-md">Cartoon Deck</h3>
+          <p class="lead" style="font-size:max(16px,1.4vw);margin-top:1vh">单文件 HTML、贴纸内置、演讲者模式 + 观众屏同步、断网降级可读、样式靠 token 一键换肤</p>
+          <div class="sticker-progress" style="margin-top:2vh">
+            <span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span>
+          </div>
+        </div>
+      </div>
+      <div class="foot"><span>07 · 对比</span><span>Make vs Buy</span></div>
+    </section>
+
+    <section class="slide hero paper" data-layout="K04" data-slide-id="quote">
+      <div class="tape" style="top:5vh;right:8vw;transform:rotate(10deg)"></div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <div class="pad-note" data-anim="wobble" style="transform:rotate(-4deg);max-width:64ch">
+          "<span class="h-md">让 AI 帮你把 deck 一段段写出来——你只管在脑子里搭骨架,剩下的事丢给 agent、CSS 变量和浏览器。</span>"
+          <div style="margin-top:3vh;display:flex;justify-content:space-between;font-family:var(--meta);font-size:14px;color:var(--doodle-ink);opacity:.7">
+            <span>— jingma-ppt-skill 设计哲学</span>
+            <span>2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="foot"><span>金句 takeaway</span><span>08 · Quote</span></div>
+    </section>
+
+    <section class="slide hero paper" data-layout="K10" data-slide-id="closing">
+      <div class="washi-tape" style="top:8vh;left:10vw;transform:rotate(-6deg)"></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+        <div class="stamp" data-anim="pop" style="margin-bottom:3vh;background:var(--anchor)">Thank You</div>
+        <h2 class="h-xl" data-anim="bounce" style="max-width:22ch">下次写 deck 时<br>说一句<span class="num" style="color:var(--anchor)"> 杂志风 / 瑞士风 / 卡通风 </span>就开跑</h2>
+        <p class="lead" style="margin-top:3vh;max-width:40ch">关注 jingma-ppt-skill,把 idea 留在贴纸上,把 deck 留在浏览器里。下次见。</p>
+        <div class="sparkle" style="position:relative;margin-top:5vh;display:inline-block">✨</div>
+      </div>
+      <div class="foot"><span>.agents/skills/jingma-ppt-skill</span><span>END · 收尾</span></div>
+    </section>
+  </div>
+
+  <!-- 演讲者模式 -->
+  <div class="speaker" id="speaker">
+    <div class="sp-top">
+      <span id="sp-clock">00:00</span>
+      <span id="sp-info"></span>
+      <button id="sp-toggle">关闭演讲者</button>
+    </div>
+    <div class="sp-preview"><iframe id="sp-frame-cur" title="当前"></iframe></div>
+    <div class="sp-next"><div class="label">下一页</div><iframe id="sp-frame-next" title="下一页"></iframe></div>
+    <div class="sp-notes" id="sp-notes" contenteditable="true" spellcheck="false"></div>
+  </div>
+
+  <!-- ESC 索引 -->
+  <div id="overview" aria-hidden="true"></div>
+
+  <!-- 提示 -->
+  <div id="hint">← → 翻页 · P 演讲者 · ESC 总览 · B 静态</div>
+  <div id="nav">
+    <button id="nav-prev" aria-label="上一页">‹</button>
+    <span id="nav-count">0 / 0</span>
+    <button id="nav-next" aria-label="下一页">›</button>
+  </div>
+
+  <!-- Motion One: CDN 优先,本地兜底 -->
+  <script src="https://cdn.jsdelivr.net/npm/motion@10.16.4/dist/motion.min.js"></script>
+  <script>window.Motion || document.write('<script src="motion.min.js"><\/script>')</script>
+
+  <!-- 演讲者备注 JSON(页面 ID 为键) -->
+  <script type="application/json" id="SPEAKER_NOTES">
+{
+  "cover": {
+    "section": "开场",
+    "purpose": "勾住注意,告诉观众接下来 5 分钟看的是 jingma-ppt-skill 的用法速览",
+    "talk": "这是 fork 自 guizang-ppt-skill、jingma 维护的轻量 Skill。一句话定位:把横向翻页 PPT 塞进一个 HTML 文件,扔进浏览器就能放映。后面会讲清楚三种风格、共享能力、配合 agent 的工作流和校验手段。",
+    "transition": "下一页直接用对话气泡回答最常见的三问"
+  },
+  "what-is": {
+    "section": "它做什么",
+    "purpose": "用三句话让技术受众明白 Skill 在链路里的位置",
+    "talk": "三问三答:一个是产物形态——单文件 HTML 不依赖服务器;一个是内容有形——三种风格 + 10 种布局骨架 + 内置主题色;一个是触发方式——配合 opencode / Claude Code / Codex 直接说一句话就能跑。要点是:不是给设计师做版面的工具,是给 agent 落地 deck 的脚手架。",
+    "transition": "用三个硬数字收束它的能力范围"
+  },
+  "hard-stats": {
+    "section": "硬数据",
+    "purpose": "用 3 / 10 / P 三个数字直观表达它的容量",
+    "talk": "3 是三种风格 A 杂志/B 瑞士/C 卡通;10 是每种风格都给出了 10 套可粘贴 layout;P 是右下角快捷键进演讲者模式——含当前/下一页 16:9 预览、宫格选页、计时、排练、激光笔、圈选、观众屏同步与断线恢复。WebGL/Canvas 背景只在 hero 页透出,普通页保持克制,断网时 Motion One 自动降级到静态。",
+    "transition": "既然能力摸清了,Act II 讲怎么用"
+  },
+  "act-two": {
+    "section": "Act II 上手指南",
+    "purpose": "做一个章节封,把后面的工作流和校验归为一段叙事",
+    "talk": "这里给观众一个停顿——skill 设计里最看重的是节奏。后面三页讲三段:套用哪段 / 校验脚本 / Make vs Buy,看你 deck 用到改哪个文件。",
+    "transition": "下一页直接看 workflow 三段问题"
+  },
+  "workflow": {
+    "section": "工作流",
+    "purpose": "把跨 7 步的 SKILL.md 总结成 3 个抽屉,帮听众心里有数",
+    "talk": "第一步澄清,7 问清单先排好风格/受众/时长/素材/图片/主题色/硬约束——这是所有 deck 重建成本的来源。第二步拷贝填模板:从 assets/ 拷 template*.html、从 themes*.md 选 5/4/5 套主题色预设(只允许选不允许自定义)、再按 layouts*.md 粘 K/S 编号骨架改文案。第三步验收:跑 validate-* 脚本对照 checklist,浏览器开 index.html 按 P 进演讲者实测。后面会一条一条展开。",
+    "transition": "下一页用拍立得墙把三种风格的视觉锚点摆一排"
+  },
+  "styles-preview": {
+    "section": "三种风格快照",
+    "purpose": "用拍立得墙的版式把 A/B/C 三风格并排比给观众看",
+    "talk": "A 电子杂志 = Noto Serif SC 衬线 + WebGL 流体;B 瑞士国际主义 = Helvetica/Inter 无衬线 + 极细网格点阵 + 单色 accent;C 卡通涂鸦 = ZCOOL KuaiLe + Patrick Hand 手写 + Canvas 蜡纸颗粒 + 贴纸装饰。三套不能混用,因为类名各自只在对应模板里有定义,同名 class 在不同模板里视觉差异很大。",
+    "transition": "拍立得设计示意,真上线请把占位换成风格预览图"
+  },
+  "scripts": {
+    "section": "校验脚本",
+    "purpose": "告诉听众交付前用哪些 CLI 把关",
+    "talk": "validate-presenter-mode 三风格共用,拦截页面 ID 缺失/重复、备注类型错位、时长超 90% 预算;validate-swiss-deck 专管 B 版,静态查登记版式/图片槽位/SVG 文本,能解析到 Playwright 还会测渲染后可见边界与 nav 安全线;validate-cartoon-deck 查贴纸安全区、手写字体、anchor candy 唯一性与装饰溢出;check-presenter-runtime-sync 监控三套模板演讲者 CSS/JS 漂移;--target-minutes 30 收紧时长预算。",
+    "transition": "作为结论,把旧 .pptx 路径和这套 Web Deck 路径做一个并排对比"
+  },
+  "compare": {
+    "section": "Make vs Buy",
+    "purpose": "用 Before/After 让观众自我代入哪个场景值得切换",
+    "talk": "左票券是普通 PPT 的痛点:动效插件化、贴纸要慢慢翻、会场投屏常常糊。右票券是 Web Deck:单文件、贴纸内置、演讲者模式 + 观众屏同步、断网降级可读、CSS 变量一键换肤。但要注意它不擅长大段表格数据、多人协作编辑和培训课件——不适合场景请回退到常规 PPT。",
+    "transition": "用一个 takeaway 便利贴收住这次介绍"
+  },
+  "quote": {
+    "section": "金句 takeaway",
+    "purpose": "给观众一句话能带走的设计哲学",
+    "talk": "Skill 的核心不是炫技的 CSS,是把 deck 拆成 layout 骨架 + 主题色 token + 演讲者契约 + validator 校验四层抽象。你只管在脑子里搭骨架,剩下交给 agent + 浏览器。这也是 SKILL.md 反复强调的:类名要在模板里有定义、主题色只选不自定义、节奏靠 hero 交替、字号有阶梯。",
+    "transition": "下一页签个名收尾"
+  },
+  "closing": {
+    "section": "收尾",
+    "purpose": "把行动召唤抛给观众——下次开口说要哪种风格",
+    "talk": "下次写 deck 时,在 agent 里说一句\"用 jingma-ppt-skill 给我做一个 XX 主题的 PPT,要杂志风/瑞士风/卡通风\"——agent 会按 SKILL.md 7 问澄清 → 拷模板 → 选主题色 → 填 layout → 自检 → 预览,你只在节点确认。把 idea 留在贴纸上,把 deck 留在浏览器里,下次见。",
+    "transition": ""
+  }
+}
+  </script>
+
+  <!-- Validator 期望的 const 数组形式(与上方 JSON 对象并存:cartoon 运行时仍按对象 map 读取) -->
+  <script>
+  const SPEAKER_NOTES = [
+    {id:"cover",title:"开场封面",section:"开场",purpose:"勾住注意,告诉观众接下来 5 分钟看的是 jingma-ppt-skill 的用法速览",
+     talk:["一句话定位:把横向翻页 PPT 塞进一个 HTML 文件,扔进浏览器就能放映","源流:fork 自 guizang-ppt-skill,jingma 维护","后面讲三种风格、共享能力、工作流和校验方法"],transition:"下一页对话气泡回答常见三问"},
+    {id:"what-is",title:"它做什么",section:"它做什么",purpose:"用三句话让技术受众明白 Skill 在链路里的位置",
+     talk:["产物形态:单文件 HTML,不依赖服务器不打包","内容有形:三种风格 × 10 套布局 × 内置主题色预设","触发方式:在 agent 里说一句话就能跑"],transition:"用三个硬数字收束能力范围"},
+    {id:"hard-stats",title:"三个硬数据",section:"硬数据",purpose:"用 3 / 10 / P 三个数字直观表达容量",
+     talk:["3:三种风格 A 杂志 / B 瑞士 / C 卡通","10:每种风格 10 套可粘贴 layout 骨架","P:演讲者模式快捷键,带预览/计时/排练/观众屏同步","WebGL/Canvas 背景只在 hero 页透出,断网自动降级"],transition:"Act II 开始讲怎么用"},
+    {id:"act-two",title:"Act II 上手指南",section:"Act II 上手指南",purpose:"做一个章节封,把后面的工作流和校验归为一段叙事",
+     talk:["给观众一个节奏停顿","后面三段:套哪段 / 校验脚本 / Make vs Buy","看 deck 用到改哪个文件再决定深入"],transition:"下一页直接看 workflow 三段"},
+    {id:"workflow",title:"工作流三段",section:"工作流",purpose:"把跨 7 步的 SKILL.md 总结成 3 个抽屉",
+     talk:["01 澄清:7 问清单——风格/受众/时长/素材/图片/主题色/硬约束","02 拷贝填模板:拷 template*.html + 选 themes*.md 主题色 + 粘 layouts*.md 骨架改文案","03 验收:跑 validate-* 脚本对照 checklist,浏览器开 index.html 按 P 进演讲者实测"],transition:"下一页摆三种风格视觉锚点"},
+    {id:"styles-preview",title:"三种风格快照",section:"三种风格快照",purpose:"用拍立得墙把 A/B/C 三风格并排比给观众看",
+     talk:["A 杂志:Noto Serif SC 衬线 + WebGL 流体","B 瑞士:无衬线 + 极细网格点阵 + 单色 accent","C 卡通:ZCOOL KuaiLe 手写 + Canvas 蜡纸颗粒 + 贴纸装饰","三种风格类名不通用,同名 class 视觉表现完全不同"],transition:"下一页看交付前校验脚本"},
+    {id:"scripts",title:"校验脚本",section:"校验脚本",purpose:"告诉听众交付前用哪些 CLI 把关",
+     talk:["validate-presenter-mode 三风格共用:页面 ID/备注类型/时长超 90% 预算","validate-swiss-deck:B 版,登记版式/图片槽位/SVG 文本/Playwright 渲染测量","validate-cartoon-deck:C 版,贴纸安全区/手写字体/anchor candy 唯一性/装饰溢出","check-presenter-runtime-sync:三套模板演讲者 CSS/JS 漂移","--target-minutes 30:收紧时长预算"],transition:"结论:并排对比旧 PPT 与 Web Deck"},
+    {id:"compare",title:"普通 PPT vs Web Deck",section:"Make vs Buy",purpose:"用 Before/After 让观众自我代入哪个场景值得切换",
+     talk:["左票券:本地 .pptx,动效插件化/贴纸要慢慢翻/会场投屏常常糊","右票券:单文件 HTML、贴纸内置、演讲者模式 + 观众屏同步、断网降级可读、CSS 变量一键换肤","不擅长大段表格数据、多人协作、培训课件——不适合场景回退常规 PPT"],transition:"用 takeaway 便利贴收住这次介绍"},
+    {id:"quote",title:"设计哲学金句",section:"金句 takeaway",purpose:"给观众一句话能带走的设计哲学",
+     talk:["核心:把 deck 拆成 layout 骨架 + 主题色 token + 演讲者契约 + validator 四层抽象","你只管搭骨架,剩下交给 agent + 浏览器","SKILL.md 强调:类名必须模板里有定义、主题色只选不自定义、节奏靠 hero 交替、字号有阶梯"],transition:"签个名收尾"},
+    {id:"closing",title:"收尾",section:"收尾",purpose:"抛出一个行动召唤——下次开口说要哪种风格",
+     talk:["在 agent 里说一句\"用 jingma-ppt-skill 给我做一个 XX 主题的 PPT\"","agent 按 SKILL.md 7 问澄清 → 拷模板 → 选主题色 → 填 layout → 自检 → 预览","你只在节点确认,把 idea 留在贴纸上,deck 留在浏览器里,下次见"],transition:"结束语"}
+  ];
+  </script>
+
+  <script type="module">
+  /* ==================== 工具 ==================== */
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const SLIDES = $$('#deck > .slide');
+  const N = SLIDES.length;
+  let idx = Math.min(Math.max(parseInt(new URLSearchParams(location.search).get('slide')||'1',10)-1,0),Math.max(N-1,0));
+
+  /* ==================== 翻页 / 滑动 ==================== */
+  const deck = $('#deck');
+  function goto(i, opts={}){
+    i = Math.min(Math.max(i,0),Math.max(N-1,0));
+    idx = i;
+    deck.style.transform = `translateX(-${idx*100}vw)`;
+    SLIDES.forEach((s,k)=>s.classList.toggle('active',k===idx));
+    updateChrome();
+    playSlide(SLIDES[idx]);
+    if(opts.broadcast!==false) sync.broadcast({type:'goto',index:idx});
+  }
+  function next(){goto(idx+1)}
+  function prev(){goto(idx-1)}
+
+  /* ==================== 动效:Motion One ==================== */
+  const { animate, inView, scroll, stagger } = window.Motion || {};
+  function playSlide(slide){
+    if(!slide) return;
+    if(document.body.classList.contains('low-power')) return;
+    if(!animate) return;
+    const items = $$('[data-anim]', slide);
+    items.forEach((el)=>{
+      const recipe = el.dataset.anim || 'bounce';
+      // 先强制可见,避免某些页"看不见"
+      el.style.opacity = 1;
+      try{
+        switch(recipe){
+          case 'bounce':  animate(el,{opacity:[0,1],y:[24,0],scale:[.96,1]},{duration:.5,easing:[.34,1.56,.64,1]}); break;
+          case 'wobble':  animate(el,{opacity:[0,1],rotate:[-6,0]},{duration:.55,easing:[.34,1.56,.64,1]}); break;
+          case 'pop':     animate(el,{opacity:[0,1],scale:[.6,1]},{duration:.45,easing:[.34,1.56,.64,1]}); break;
+          case 'float-up':animate(el,{opacity:[0,1],y:[40,0]},{duration:.6,easing:'ease-out'}); break;
+          case 'confetti':animate(el,{opacity:[0,1],y:[-30,0],rotate:[-12,12,0]},{duration:.7,easing:'ease-out'}); break;
+          default:        animate(el,{opacity:[0,1],y:[16,0]},{duration:.45});
+        }
+      }catch(e){}
+    });
+  }
+
+  /* ==================== Chrome / 计数 ==================== */
+  function updateChrome(){
+    $('#nav-count').textContent = `${idx+1} / ${N}`;
+    CAS = idx;
+  }
+  let CAS = idx;
+
+  /* ==================== 键盘 / 鼠标 / 触屏 ==================== */
+  addEventListener('keydown',e=>{
+    if(e.target && e.target.isContentEditable) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ') {next();}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp') {prev();}
+    else if(e.key==='Home') goto(0);
+    else if(e.key==='End') goto(N-1);
+    else if(e.key==='Escape') toggleOverview();
+    else if(e.key.toLowerCase()==='p') togglePresenter();
+    else if(e.key.toLowerCase()==='b') toggleLowPower();
+  });
+  let wheelLock=false;
+  addEventListener('wheel',e=>{
+    if(document.body.classList.contains('presenter')) return;
+    if(wheelLock) return; wheelLock=true;
+    setTimeout(()=>wheelLock=false,650);
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){ e.deltaX>0?next():prev(); }
+    else{ e.deltaY>0?next():prev(); }
+  },{passive:true});
+  let tx=0,ty=0;
+  addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) dx<0?next():prev();
+  });
+  $('#nav-prev').addEventListener('click',prev);
+  $('#nav-next').addEventListener('click',next);
+  $('#sp-toggle').addEventListener('click',togglePresenter);
+
+  /* ==================== ESC 索引 ==================== */
+  function buildOverview(){
+    const ov = $('#overview'); ov.innerHTML='';
+    SLIDES.forEach((s,i)=>{
+      const url = `${location.pathname}?slide=${i+1}&embed=1`;
+      const card = document.createElement('div'); card.className='ov-card';
+      const fr = document.createElement('iframe'); fr.src=url; fr.loading='lazy';
+      const lb = document.createElement('div'); lb.className='ov-num'; lb.textContent=`${String(i+1).padStart(2,'0')} · ${s.dataset.slideId||''}`;
+      card.appendChild(fr); card.appendChild(lb);
+      card.addEventListener('click',()=>{toggleOverview();goto(i);});
+      ov.appendChild(card);
+    });
+  }
+  function toggleOverview(){
+    if(document.body.classList.contains('presenter')) return;
+    const on = document.body.classList.toggle('overview');
+    if(on && !$('#overview').children.length) buildOverview();
+  }
+
+  /* ==================== 低功耗 ==================== */
+  function toggleLowPower(){
+    document.body.classList.toggle('low-power');
+    try{ localStorage.setItem('jingma-ppt-low-power', document.body.classList.contains('low-power')?'1':'0'); }catch(e){}
+    if(document.body.classList.contains('low-power')){
+      // 重新跑当前页 reveal,停 RAF 让内容静态可见
+      SLIDES.forEach(s=>$$('[data-anim]',s).forEach(el=>{el.style.opacity=1;el.style.transform='none';}));
+    }else{
+      playSlide(SLIDES[idx]);
+    }
+  }
+  try{ if(localStorage.getItem('jingma-ppt-low-power')==='1') document.body.classList.add('low-power'); }catch(e){}
+
+  /* ==================== 演讲者模式 ==================== */
+  let audienceWindow=null;
+  function togglePresenter(){
+    document.body.classList.toggle('presenter');
+    if(document.body.classList.contains('presenter')){
+      openAudience(); sync.start(); renderNotes();
+    }else{
+      if(audienceWindow && !audienceWindow.closed) audienceWindow.close();
+    }
+  }
+  function openAudience(){
+    const url = `${location.pathname}?slide=${idx+1}&audience=1`;
+    audienceWindow = window.open(url, `jingma-ppt-audience-${sessionKey()}`, 'popup=yes,width=1440,height=900');
+  }
+  function sessionKey(){ return sessionStorage.getItem('jingma-ppt-session') || (k=>{sessionStorage.setItem('jingma-ppt-session',k);return k;})(Math.random().toString(36).slice(2,8)); }
+
+  // 演讲者模式里:当前/下一页预览 iframe
+  function renderPreview(){
+    const cur = $('#sp-frame-cur');
+    const nxt = $('#sp-frame-next');
+    cur.src = `${location.pathname}?slide=${idx+1}&embed=1`;
+    nxt.src = `${location.pathname}?slide=${Math.min(idx+2,N)}&embed=1`;
+  }
+
+  // 渲染备注到 sp-notes 容器,保存到 localStorage
+  let notesMap = {};
+  try{ notesMap = JSON.parse($('#SPEAKER_NOTES').textContent.trim() || '{}') || {}; }catch(e){ notesMap = {}; }
+  function renderNotes(){
+    const slide = SLIDES[idx];
+    const id = slide?.dataset.slideId;
+    if(!id) { $('#sp-notes').textContent=''; return; }
+    const note = notesMap[id] || {};
+    const text = [
+      note.section ? `# ${note.section}` : '',
+      note.purpose ? `目的: ${note.purpose}` : '',
+      note.talk ? `\n${note.talk}` : '',
+      note.transition ? `\n转场: ${note.transition}` : '',
+      note.minutes ? `\n时长: ${note.minutes} 分钟` : '',
+    ].filter(Boolean).join('\n');
+    $('#sp-notes').textContent = text;
+    renderPreview();
+    $('#sp-info').textContent = `${idx+1}/${N} · ${id}`;
+  }
+  let saveTimer=0;
+  $('#sp-notes').addEventListener('input',()=>{
+    const slide = SLIDES[idx]; const id = slide?.dataset.slideId;
+    if(!id) return;
+    const raw = $('#sp-notes').textContent;
+    if(!notesMap[id]) notesMap[id] = {};
+    notesMap[id].talk = raw;
+    clearTimeout(saveTimer); saveTimer=setTimeout(()=>{
+      try{ localStorage.setItem('jingma-ppt-note:'+location.pathname+':'+id, raw); }catch(e){}
+    },400);
+  });
+
+  // 计时
+  let clockStart=0, clockOn=false, clockTimer=null;
+  function clockTick(){
+    if(!clockOn) return;
+    const s = Math.floor((Date.now()-clockStart)/1000);
+    const mm = String(Math.floor(s/60)).padStart(2,'0');
+    const ss = String(s%60).padStart(2,'0');
+    $('#sp-clock').textContent = `${mm}:${ss}`;
+  }
+  function startClock(){ if(clockOn) return; clockOn=true; clockStart=Date.now(); clockTimer=setInterval(clockTick,1000); }
+  function stopClock(){ clockOn=false; clearInterval(clockTimer); }
+
+  /* ==================== 跨窗口同步(演讲者 ↔ 观众屏) ==================== */
+  const SESSION = sessionKey();
+  const sync = {
+    channel: null,
+    start(){
+      if(this.channel) return;
+      try { this.channel = new BroadcastChannel(`jingma-ppt:${location.pathname}:${SESSION}`); this.channel.onmessage=e=>this.recv(e.data); } catch(e){ this.channel=null; }
+    },
+    send(payload){ audienceWindow?.postMessage({__jingmaPptSync:1, session:SESSION, role:'presenter', ...payload},'*'); },
+    broadcast(payload){ this.channel?.postMessage(payload); },
+    recv(m){
+      if(!m || m.__jingmaPptSync!==1 || m.session!==SESSION) return;
+      // presenter 端只需要监听 audience 的 hello / low-power 回报
+      if(m.type==='hello' && m.role==='audience') { this.send({type:'goto', index:idx}); }
+      else if(m.type==='low-power') document.body.classList.toggle('low-power', !!m.on);
+    }
+  };
+  addEventListener('message', e=>{
+    const m = e.data; if(!m || m.__jingmaPptSync!==1 || m.session!==SESSION) return;
+    if(m.role==='audience' && m.type==='hello') { sync.send({type:'goto', index:idx}); }
+    if(m.role==='presenter'){
+      if(m.type==='goto') goto(m.index, {broadcast:false});
+      else if(m.type==='low-power') document.body.classList.toggle('low-power', !!m.on);
+    }
+  });
+
+  /* ==================== Canvas 蜡笔纸背景 ==================== */
+  (function bgPaper(){
+    const cv = $('#bg-paper'); if(!cv) return;
+    const ctx = cv.getContext('2d');
+    function resize(){ cv.width=innerWidth; cv.height=innerHeight; draw(); }
+    function draw(){
+      const W=cv.width,H=cv.height;
+      // 米白底
+      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--paper') || '#fff9ef';
+      ctx.fillRect(0,0,W,H);
+      // 蜡笔颗粒
+      const grains = 1800;
+      for(let i=0;i<grains;i++){
+        const x=Math.random()*W, y=Math.random()*H;
+        const r=Math.random()*1.2+0.2;
+        const c = Math.random()<.5 ? 'rgba(0,0,0,.04)' : 'rgba(255,255,255,.6)';
+        ctx.fillStyle = c;
+        ctx.fillRect(x,y,r,r);
+      }
+      // 漂浮贴纸装饰(静止)
+      const accent = getComputedStyle(document.body).getPropertyValue('--anchor').trim() || '#ff5b8a';
+      const candy2 = getComputedStyle(document.body).getPropertyValue('--candy-2').trim() || '#ffd36e';
+      const doodle = '#3a3a3a';
+      const decos = [
+        {x:W*.06,y:H*.10,r:6,fill:accent},
+        {x:W*.94,y:H*.10,r:6,fill:candy2},
+        {x:W*.08,y:H*.92,r:8,fill:candy2},
+        {x:W*.92,y:H*.93,r:8,fill:accent},
+      ];
+      decos.forEach(d=>{
+        ctx.beginPath(); ctx.fillStyle=d.fill; ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fill();
+      });
+      // 顶部涂鸦波浪线
+      ctx.strokeStyle = 'rgba(58,58,58,.06)'; ctx.lineWidth=2;
+      ctx.beginPath();
+      for(let x=0;x<W;x+=2){ const y=20+Math.sin(x/40)*8; if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+      ctx.stroke();
+    }
+    addEventListener('resize', resize);
+    // 低功耗时不画
+    if(!document.body.classList.contains('low-power')) resize();
+    else { cv.style.display='none'; }
+    // B 键切换后重画
+    new MutationObserver(()=>{ if(!document.body.classList.contains('low-power')) { cv.style.display=''; resize(); } else cv.style.display='none'; }).observe(document.body,{attributes:true,attributeFilter:['class']});
+  })();
+
+  /* ==================== 受众 / 嵌入模式 ==================== */
+  const params = new URLSearchParams(location.search);
+  if(params.get('embed')==='1' || params.get('audience')==='1'){
+    document.body.classList.add('audience');
+    $('#brand')?.remove(); $('#nav')?.remove(); $('#hint')?.remove(); $('#speaker')?.remove(); $('#overview')?.remove();
+    if(params.get('audience')==='1'){
+      // 监听演讲者广播
+      try { window.opener.postMessage({__jingmaPptSync:1, session: SESSION, role:'audience', type:'hello'},'*'); } catch(e){}
+      addEventListener('message', e=>{
+        const m=e.data; if(!m||m.__jingmaPptSync!==1||m.session!==SESSION) return;
+        if(m.role==='presenter' && m.type==='goto') goto(m.index, {broadcast:false});
+      });
+    }
+  }
+
+  /* ==================== 启动 ==================== */
+  if(!SLIDES.length){
+    deck.innerHTML = `<div class="slide candy hero" style="justify-content:center;align-items:center;text-align:center">
+      <h1 class="h-hero">⚠ 没有内容</h1>
+      <p class="lead" style="margin-top:2vh">在 index.html 里把 <code>&lt;!-- SLIDES_HERE --&gt;</code> 替换为 K01&#8211;K10 的 layout 段落</p>
+    </div>`;
+  }
+  goto(idx, {broadcast:false});
+  if(document.body.classList.contains('presenter')){ startClock(); renderNotes(); }
+  </script>
+</body>
+</html>

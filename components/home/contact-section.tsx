@@ -3,13 +3,11 @@
 import Image from 'next/image';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/components/language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { contactInfo } from '@/lib/site-data';
 
 export function ContactSection() {
-  const { language } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
 
   return (
     <section id="contact" className="scroll-mt-20 py-20 md:py-24">
@@ -62,7 +60,7 @@ export function ContactSection() {
                       {t('footerAddress')}
                     </p>
                     <p className="mt-1 leading-6 text-zinc-300">
-                      {contactInfo.address[language]}
+                      {contactInfo.address}
                     </p>
                   </div>
                 </div>
@@ -95,8 +93,8 @@ export function ContactSection() {
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {[
-                  { src: '/weixin-qrcode.jpg', label: language === 'zh' ? '微信咨询' : 'Consulting' },
-                  { src: '/weixin-qrcode1.jpg', label: language === 'zh' ? '商务合作' : 'Partnership' },
+                  { src: '/weixin-qrcode.jpg', label: '微信咨询' },
+                  { src: '/weixin-qrcode1.jpg', label: '商务合作' },
                 ].map((qr) => (
                   <div key={qr.src} className="text-center">
                     <div className="relative mx-auto aspect-square w-full max-w-[150px] overflow-hidden rounded-xl border bg-white">
@@ -113,9 +111,7 @@ export function ContactSection() {
                 ))}
               </div>
               <p className="mt-4 text-center text-[11px] leading-5 text-zinc-500">
-                {language === 'zh'
-                  ? '扫码添加微信，备注「项目咨询」'
-                  : 'Scan to connect on WeChat and mention “project enquiry”.'}
+                {'扫码添加微信，备注「项目咨询」'}
               </p>
             </div>
           </div>

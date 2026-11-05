@@ -3,26 +3,24 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Search } from 'lucide-react';
-import { useLanguage } from '@/components/language-provider';
 import type { Post } from '@/lib/posts';
 
-const tagRules: { pattern: RegExp; zh: string; en: string }[] = [
-  { pattern: /AI|Transformer|模型|智能体/i, zh: 'AI / 模型', en: 'AI / Models' },
-  { pattern: /Elastic|Logstash|ELK|Kibana/i, zh: '搜索与日志', en: 'Search & Logs' },
-  { pattern: /Docker|K8S|Kubernetes|Linux|nginx|麒麟/i, zh: '云原生', en: 'Cloud Native' },
-  { pattern: /mysql|redis|postgres|数据库/i, zh: '数据库', en: 'Database' },
-  { pattern: /flowable|spring|微服务|网关|K8S/i, zh: '后端架构', en: 'Backend' },
-  { pattern: /PPT|设计|图片|Dribbble|iloveimg/i, zh: '效率工具', en: 'Productivity' },
+const tagRules: { pattern: RegExp; label: string }[] = [
+  { pattern: /AI|Transformer|模型|智能体/i, label: 'AI / 模型' },
+  { pattern: /Elastic|Logstash|ELK|Kibana/i, label: '搜索与日志' },
+  { pattern: /Docker|K8S|Kubernetes|Linux|nginx|麒麟/i, label: '云原生' },
+  { pattern: /mysql|redis|postgres|数据库/i, label: '数据库' },
+  { pattern: /flowable|spring|微服务|网关|K8S/i, label: '后端架构' },
+  { pattern: /PPT|设计|图片|Dribbble|iloveimg/i, label: '效率工具' },
 ];
 
-function getTag(title: string, language: 'zh' | 'en') {
+function getTag(title: string) {
   const rule = tagRules.find((item) => item.pattern.test(title));
-  return rule ? rule[language] : language === 'zh' ? '工程实践' : 'Engineering';
+  return rule ? rule.label : '工程实践';
 }
 
 export function BlogListing({ posts }: { posts: Post[] }) {
-  const { language } = useLanguage();
-  const [query, setQuery] = useState('');
+const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
     const keyword = query.trim().toLowerCase();
@@ -40,25 +38,23 @@ export function BlogListing({ posts }: { posts: Post[] }) {
         <div className="container relative z-10">
           <div className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             <span className="h-px w-8 bg-primary/70" />
-            {language === 'zh' ? '技术博客' : 'Engineering blog'}
+            {'技术博客'}
           </div>
           <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
-            {language === 'zh' ? '把踩过的坑，写成可复用的经验' : 'Notes from the field'}
+            {'把踩过的坑，写成可复用的经验'}
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            {language === 'zh'
-              ? '研发团队在日常项目中沉淀的技术文章，涵盖 AI、数据、后端架构、运维与效率工具。'
-              : 'Technical notes from our projects, covering AI, data, backend architecture, operations and productivity.'}
+            {'研发团队在日常项目中沉淀的技术文章，涵盖 AI、数据、后端架构、运维与效率工具。'}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
             <span>
               <strong className="text-foreground">{posts.length}</strong>{' '}
-              {language === 'zh' ? '篇文章' : 'articles'}
+              {'篇文章'}
             </span>
             <span>AI / 数据</span>
-            <span>{language === 'zh' ? '后端架构' : 'Backend'}</span>
-            <span>{language === 'zh' ? '运维实践' : 'Operations'}</span>
+            <span>{'后端架构'}</span>
+            <span>{'运维实践'}</span>
           </div>
         </div>
       </section>
@@ -67,16 +63,14 @@ export function BlogListing({ posts }: { posts: Post[] }) {
         <div className="container">
           <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
-              {language === 'zh'
-                ? `共 ${filtered.length} 篇文章`
-                : `${filtered.length} article${filtered.length === 1 ? '' : 's'}`}
+              {`共 ${filtered.length} 篇文章`}
             </p>
             <div className="relative w-full sm:w-72">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder={language === 'zh' ? '搜索文章标题…' : 'Search articles…'}
+                placeholder={'搜索文章标题…'}
                 className="h-10 w-full rounded-full border bg-background pl-9 pr-4 text-sm outline-none transition-colors focus:border-primary/50 focus:ring-2 focus:ring-primary/10"
               />
             </div>
@@ -85,7 +79,7 @@ export function BlogListing({ posts }: { posts: Post[] }) {
           {filtered.length === 0 ? (
             <div className="rounded-2xl border bg-muted/30 py-16 text-center">
               <p className="text-sm text-muted-foreground">
-                {language === 'zh' ? '没有找到匹配的文章。' : 'No matching articles.'}
+                {'没有找到匹配的文章。'}
               </p>
             </div>
           ) : (
@@ -98,7 +92,7 @@ export function BlogListing({ posts }: { posts: Post[] }) {
                 >
                   <div className="flex items-center justify-between gap-3">
                     <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-primary">
-                      {getTag(post.title, language)}
+                      {getTag(post.title)}
                     </span>
                     {post.date && (
                       <time className="shrink-0 text-[11px] text-muted-foreground">
@@ -110,7 +104,7 @@ export function BlogListing({ posts }: { posts: Post[] }) {
                     {post.title}
                   </h2>
                   <div className="mt-auto flex items-center justify-between border-t pt-4 text-xs text-muted-foreground">
-                    <span>{language === 'zh' ? '阅读文章' : 'Read article'}</span>
+                    <span>{'阅读文章'}</span>
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </span>

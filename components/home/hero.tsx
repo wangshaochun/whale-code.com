@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/components/language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 
 const fadeUp = {
@@ -14,8 +13,7 @@ const fadeUp = {
 };
 
 export function Hero() {
-  const { language } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
 
   return (
     <section className="relative overflow-hidden border-b bg-gradient-to-b from-primary/[0.04] via-background to-background">
@@ -105,7 +103,7 @@ export function Hero() {
               <span className="h-2 w-2 rounded-full bg-amber-400/80" />
               <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
               <span className="ml-3 max-w-[70%] truncate rounded-md bg-background/80 px-3 py-0.5 text-[10px] text-muted-foreground">
-                {language === 'zh' ? '航运监管 · 电子海图' : 'Shipping · Electronic chart'}
+                {'航运监管 · 电子海图'}
               </span>
             </div>
             <div className="relative aspect-[16/9]">
@@ -131,9 +129,9 @@ export function Hero() {
               />
             </div>
             <div className="p-3">
-              <p className="text-xs font-semibold">{language === 'zh' ? 'AI 审计助手' : 'AI audit assistant'}</p>
+              <p className="text-xs font-semibold">{'AI 审计助手'}</p>
               <p className="mt-0.5 text-[10px] text-muted-foreground">
-                {language === 'zh' ? '知识库问答 · 依据引用' : 'Knowledge Q&A · citations'}
+                {'知识库问答 · 依据引用'}
               </p>
             </div>
           </div>
@@ -141,14 +139,14 @@ export function Hero() {
           <div className="absolute -left-3 top-0 rounded-xl border bg-card/90 px-4 py-3 shadow-lg backdrop-blur">
             <p className="text-2xl font-bold text-primary">80+</p>
             <p className="text-[10px] text-muted-foreground">
-              {language === 'zh' ? '审批流程上线' : 'approval flows live'}
+              {'审批流程上线'}
             </p>
           </div>
 
           <div className="absolute -right-2 bottom-14 rounded-xl border bg-card/90 px-4 py-3 shadow-lg backdrop-blur">
-            <p className="text-sm font-semibold">{language === 'zh' ? '10+ 年' : '10+ yrs'}</p>
+            <p className="text-sm font-semibold">{'10+ 年'}</p>
             <p className="text-[10px] text-muted-foreground">
-              {language === 'zh' ? '核心团队研发经验' : 'core team R&D'}
+              {'核心团队研发经验'}
             </p>
           </div>
         </motion.div>

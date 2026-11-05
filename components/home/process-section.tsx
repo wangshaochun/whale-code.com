@@ -2,13 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { SectionHeading } from '@/components/section-heading';
-import { useLanguage } from '@/components/language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { deliverySteps } from '@/lib/site-data';
 
 export function ProcessSection() {
-  const { language } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
 
   return (
     <section
@@ -32,7 +30,7 @@ export function ProcessSection() {
         <div className="mt-14 grid gap-10 md:grid-cols-5 md:gap-4">
           {deliverySteps.map((step, index) => (
             <motion.div
-              key={step.title.en}
+              key={step.title}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: index * 0.08 }}
@@ -45,9 +43,9 @@ export function ProcessSection() {
               <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-primary/40 bg-zinc-950 font-mono text-sm text-primary">
                 0{index + 1}
               </div>
-              <h3 className="mt-5 text-lg font-semibold">{step.title[language]}</h3>
+              <h3 className="mt-5 text-lg font-semibold">{step.title}</h3>
               <p className="mt-2 text-sm leading-6 text-zinc-400">
-                {step.description[language]}
+                {step.description}
               </p>
             </motion.div>
           ))}
@@ -55,15 +53,13 @@ export function ProcessSection() {
 
         <div className="mt-14 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            {language === 'zh'
-              ? '每个阶段都有明确产出与验收标准，项目进度随时可见。'
-              : 'Every stage has clear deliverables and acceptance criteria, so progress is always visible.'}
+            {'每个阶段都有明确产出与验收标准，项目进度随时可见。'}
           </p>
           <a
             href="#contact"
             className="font-medium text-primary transition-opacity hover:opacity-80"
           >
-            {language === 'zh' ? '从一次沟通开始 →' : 'Start with a conversation →'}
+            {'从一次沟通开始 →'}
           </a>
         </div>
       </div>

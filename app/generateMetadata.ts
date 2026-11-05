@@ -1,20 +1,60 @@
+import type { Metadata } from 'next';
 import { getTranslation } from '@/lib/translations';
 
-export function generateMetadata(language: 'en' | 'zh' = 'zh') {
+export const siteUrl = 'https://whale-code.com';
+export const siteName = '石家庄鲸码互联网科技';
+export const siteShortName = '鲸码科技';
+
+export function generateMetadata(): Metadata {
+  const title = getTranslation('metaTitle');
+  const description = getTranslation('metaDescription');
+
   return {
-    metadataBase: new URL('https://whale-code.com'),
-    title: getTranslation(language, 'metaTitle'),
-    description: getTranslation(language, 'metaDescription'),
+    metadataBase: new URL(siteUrl),
+    title: {
+      default: title,
+      template: `%s | ${siteShortName}`,
+    },
+    description,
+    applicationName: siteShortName,
+    alternates: {
+      canonical: '/',
+      types: {
+        'application/rss+xml': '/feed.xml',
+      },
+    },
     openGraph: {
-      title: getTranslation(language, 'metaTitle'),
-      description: getTranslation(language, 'metaDescription'),
-      images: ['/images/og-image.png'],
+      type: 'website',
+      locale: 'zh_CN',
+      url: siteUrl,
+      siteName: siteShortName,
+      title,
+      description,
+      images: [
+        {
+          url: '/images/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: getTranslation(language, 'metaTitle'),
-      description: getTranslation(language, 'metaDescription'),
+      title,
+      description,
       images: ['/images/og-image.png'],
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
   };
-} 
+}

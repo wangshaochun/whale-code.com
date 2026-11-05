@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Phone } from 'lucide-react';
 import Logo from './logo';
-import { useLanguage } from './language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { contactInfo, services } from '@/lib/site-data';
 
@@ -19,9 +18,7 @@ const navLinks = [
 
 export default function Footer() {
   const { t } = useTranslation();
-  const { language } = useLanguage();
-
-  return (
+return (
     <footer className="border-t bg-muted/30">
       <div className="container py-12 md:py-16">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.1fr]">
@@ -31,10 +28,7 @@ export default function Footer() {
               {t('footerDesc')}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
-              {(language === 'zh'
-                ? ['软件定制', 'AI 应用', '数据中台', '小程序']
-                : ['Custom software', 'AI applications', 'Data platforms', 'Mini programs']
-              ).map((tag) => (
+              {(['软件定制', 'AI 应用', '数据中台', '小程序']).map((tag) => (
                 <span
                   key={tag}
                   className="rounded-full border bg-background px-2.5 py-1 text-[11px] text-muted-foreground"
@@ -65,8 +59,8 @@ export default function Footer() {
             <h3 className="text-sm font-semibold">{t('footerServices')}</h3>
             <ul className="mt-4 space-y-2.5">
               {services.slice(0, 5).map((service) => (
-                <li key={service.title.en} className="text-sm text-muted-foreground">
-                  {service.title[language]}
+                <li key={service.title} className="text-sm text-muted-foreground">
+                  {service.title}
                 </li>
               ))}
             </ul>
@@ -91,7 +85,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span className="leading-6">{contactInfo.address[language]}</span>
+                <span className="leading-6">{contactInfo.address}</span>
               </li>
             </ul>
 
@@ -108,7 +102,7 @@ export default function Footer() {
               <p className="text-xs leading-5 text-muted-foreground">
                 {t('footerWechat')}
                 <br />
-                {language === 'zh' ? '扫码添加，备注项目咨询' : 'Scan and mention your project'}
+                {'扫码添加，备注项目咨询'}
               </p>
             </div>
           </div>
@@ -121,9 +115,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} {t('companyName')}. {t('footerRights')}
           </p>
           <p>
-            {language === 'zh'
-              ? '石家庄 · 中国 · 服务全国'
-              : 'Shijiazhuang · China · Serving nationwide'}
+            {'石家庄 · 中国 · 服务全国'}
           </p>
         </div>
       </div>

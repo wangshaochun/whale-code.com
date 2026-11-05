@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Compass, Sparkles, Target, Users } from 'lucide-react';
 import { SectionHeading } from '@/components/section-heading';
-import { useLanguage } from '@/components/language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 
 const reasons = [
@@ -15,8 +14,7 @@ const reasons = [
 ] as const;
 
 export function AboutSection() {
-  const { language } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
 
   return (
     <section id="about" className="scroll-mt-20 border-t bg-gradient-to-b from-background to-primary/[0.04] py-20 md:py-24">
@@ -48,11 +46,11 @@ export function AboutSection() {
             <div className="absolute -bottom-5 left-5 rounded-xl border bg-card px-5 py-3 shadow-lg">
               <p className="text-2xl font-bold text-primary">10+</p>
               <p className="text-xs text-muted-foreground">
-                {language === 'zh' ? '年研发经验' : 'years of R&D'}
+                {'年研发经验'}
               </p>
             </div>
             <div className="absolute -right-3 -top-3 hidden rounded-full border bg-card px-3 py-1.5 text-[11px] font-medium text-muted-foreground shadow-sm sm:block">
-              {language === 'zh' ? '石家庄 · 服务全国' : 'Shijiazhuang · serving nationwide'}
+              {'石家庄 · 服务全国'}
             </div>
           </motion.div>
 

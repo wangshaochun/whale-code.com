@@ -2,23 +2,15 @@
 
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { useLanguage } from './language-provider';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun, Globe, Menu, ArrowRight } from 'lucide-react';
+import { Moon, Sun, Menu, ArrowRight } from 'lucide-react';
 import Logo from './logo';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useTranslation } from '@/hooks/useTranslation';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
-  const { language, setLanguage } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
 
   const navItems = [
     { href: '/', label: t('home') },
@@ -57,22 +49,6 @@ export default function Header() {
             </Link>
           </Button>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="hover:text-primary">
-                <Globe className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setLanguage('en')}>
-                English
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setLanguage('zh')}>
-                中文
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
           <Button
             variant="ghost"
             size="icon"
@@ -109,9 +85,7 @@ export default function Header() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <div className="mt-6 border-t pt-4 text-xs text-muted-foreground">
-                  {language === 'zh'
-                    ? '石家庄市桥西区鸿锐大厦 2 号楼 1105 室'
-                    : 'Room 1105, Building 2, Hongrui Mansion, Shijiazhuang'}
+                  {'石家庄市桥西区鸿锐大厦 2 号楼 1105 室'}
                 </div>
               </div>
             </SheetContent>

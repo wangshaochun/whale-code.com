@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
-import { useLanguage } from '@/components/language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { caseCategories, caseStudies } from '@/lib/site-data';
 
@@ -12,15 +11,14 @@ interface CaseDetailViewProps {
 }
 
 export function CaseDetailView({ caseId }: CaseDetailViewProps) {
-  const { language } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
   const study = caseStudies.find((item) => item.id === caseId);
 
   if (!study) {
     return (
       <div className="container py-24 text-center">
         <p className="text-lg font-medium">
-          {language === 'zh' ? '案例不存在或已下线。' : 'This case could not be found.'}
+          {'案例不存在或已下线。'}
         </p>
         <Link href="/cases" className="mt-4 inline-flex text-sm text-primary hover:underline">
           {t('backToCases')}
@@ -49,17 +47,17 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
             <div>
               <div className="flex flex-wrap items-center gap-3 text-xs font-medium">
                 <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">
-                  {category?.label[language]}
+                  {category?.label}
                 </span>
-                <span className="text-muted-foreground">{study.subtitle[language]}</span>
+                <span className="text-muted-foreground">{study.subtitle}</span>
                 <span className="text-muted-foreground/50">/</span>
                 <span className="text-muted-foreground">{study.year}</span>
               </div>
               <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                {study.title[language]}
+                {study.title}
               </h1>
               <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
-                {study.summary[language]}
+                {study.summary}
               </p>
             </div>
 
@@ -84,13 +82,13 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
             <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
             <span className="ml-3 truncate text-[11px] text-muted-foreground">
-              {study.title[language]}
+              {study.title}
             </span>
           </div>
           <div className="relative aspect-[16/9]">
             <Image
               src={study.cover}
-              alt={study.title[language]}
+              alt={study.title}
               fill
               priority
               sizes="(max-width: 1280px) 100vw, 1200px"
@@ -108,7 +106,7 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
               {t('projectBackground')}
             </h2>
             <p className="mt-4 text-base leading-8 text-foreground/80">
-              {study.challenge[language]}
+              {study.challenge}
             </p>
           </section>
 
@@ -118,7 +116,7 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
               {t('projectSolution')}
             </h2>
             <p className="mt-4 text-base leading-8 text-foreground/80">
-              {study.solution[language]}
+              {study.solution}
             </p>
           </section>
 
@@ -129,9 +127,9 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
             </h2>
             <ul className="mt-5 space-y-3">
               {study.results.map((result) => (
-                <li key={result.en} className="flex items-start gap-3 text-sm leading-6 sm:text-base">
+                <li key={result} className="flex items-start gap-3 text-sm leading-6 sm:text-base">
                   <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" />
-                  <span className="text-foreground/80">{result[language]}</span>
+                  <span className="text-foreground/80">{result}</span>
                 </li>
               ))}
             </ul>
@@ -157,7 +155,7 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
                     >
                       <Image
                         src={image.src}
-                        alt={image.caption[language]}
+                        alt={image.caption}
                         fill
                         sizes={
                           isWide
@@ -168,7 +166,7 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
                       />
                     </div>
                     <figcaption className="mt-2 text-xs text-muted-foreground">
-                      {image.caption[language]}
+                      {image.caption}
                     </figcaption>
                   </figure>
                 );
@@ -180,12 +178,12 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
         <aside className="lg:sticky lg:top-24 lg:h-fit">
           <div className="grid grid-cols-3 gap-2 rounded-2xl border bg-muted/40 p-4 lg:grid-cols-1">
             {study.metrics.map((metric) => (
-              <div key={metric.label.en} className="rounded-xl bg-background p-3 text-center lg:text-left">
+              <div key={metric.label} className="rounded-xl bg-background p-3 text-center lg:text-left">
                 <p className="text-xl font-bold text-primary sm:text-2xl">
-                  {language === 'en' && metric.valueEn ? metric.valueEn : metric.value}
+                  {metric.value}
                 </p>
                 <p className="mt-0.5 text-[11px] leading-4 text-muted-foreground">
-                  {metric.label[language]}
+                  {metric.label}
                 </p>
               </div>
             ))}
@@ -206,12 +204,10 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
 
           <div className="mt-5 rounded-2xl bg-zinc-950 p-5 text-white">
             <h3 className="text-base font-semibold">
-              {language === 'zh' ? '有类似的项目需求？' : 'A similar project in mind?'}
+              {'有类似的项目需求？'}
             </h3>
             <p className="mt-2 text-xs leading-5 text-zinc-400">
-              {language === 'zh'
-                ? '把场景和目标告诉我们，我们会给出可执行的建议与报价。'
-                : 'Tell us the scenario and the goal. We will come back with a practical plan and quote.'}
+              {'把场景和目标告诉我们，我们会给出可执行的建议与报价。'}
             </p>
             <Link
               href="/#contact"
@@ -233,7 +229,7 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
             <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-xl bg-muted sm:w-56">
               <Image
                 src={nextStudy.cover}
-                alt={nextStudy.title[language]}
+                alt={nextStudy.title}
                 fill
                 sizes="224px"
                 className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
@@ -244,9 +240,9 @@ export function CaseDetailView({ caseId }: CaseDetailViewProps) {
                 {t('projectNext')}
               </p>
               <h2 className="mt-2 text-lg font-semibold transition-colors group-hover:text-primary sm:text-xl">
-                {nextStudy.title[language]}
+                {nextStudy.title}
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">{nextStudy.subtitle[language]}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{nextStudy.subtitle}</p>
             </div>
             <ArrowRight className="hidden h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary sm:block" />
           </Link>

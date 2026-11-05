@@ -69,6 +69,19 @@ export function getAllPosts(): Post[] {
   });
 }
 
+// 去除 Markdown 语法，用于生成摘要与 meta description
+export function stripMarkdown(input: string): string {
+  return input
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/^\s*\d+[、.]\s*/gm, ' ')
+    .replace(/[#>*`_~|]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 // 根据ID获取单篇文章的详细内容
 export function getPostData(id: string): PostWithContent {
   try {

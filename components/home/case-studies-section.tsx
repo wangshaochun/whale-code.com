@@ -5,13 +5,11 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { CaseCard } from '@/components/case-card';
 import { SectionHeading } from '@/components/section-heading';
-import { useLanguage } from '@/components/language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { caseStudies } from '@/lib/site-data';
 
 export function CaseStudiesSection() {
-  const { language } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
 
   return (
     <section id="cases" className="scroll-mt-20 border-y bg-muted/30 py-20 md:py-24">
@@ -58,21 +56,16 @@ export function CaseStudiesSection() {
             >
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                  {language === 'zh' ? '更多案例' : 'More work'}
+                  {'更多案例'}
                 </p>
                 <h3 className="mt-2 text-2xl font-semibold tracking-tight">
-                  {language === 'zh' ? '还有更多行业项目，等你来聊' : 'More industry projects behind the scenes'}
+                  {'还有更多行业项目，等你来聊'}
                 </h3>
                 <p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">
-                  {language === 'zh'
-                    ? '航运、教育、审计、医疗、零售……每个项目都从具体业务问题开始。查看完整案例，或直接告诉我们你的场景。'
-                    : 'Shipping, education, audit, healthcare, retail — every project starts with a concrete business problem. Browse the full portfolio or tell us about yours.'}
+                  {'航运、教育、审计、医疗、零售……每个项目都从具体业务问题开始。查看完整案例，或直接告诉我们你的场景。'}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {(language === 'zh'
-                    ? ['航运物流', '教育', '审计', '医疗', '零售电商']
-                    : ['Shipping', 'Education', 'Audit', 'Healthcare', 'Retail']
-                  ).map((item) => (
+                  {(['航运物流', '教育', '审计', '医疗', '零售电商']).map((item) => (
                     <span
                       key={item}
                       className="rounded-full border border-primary/15 bg-background/70 px-2.5 py-1 text-[11px] text-muted-foreground"

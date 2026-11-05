@@ -4,13 +4,11 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Download } from 'lucide-react';
 import { CaseCard } from '@/components/case-card';
-import { useLanguage } from '@/components/language-provider';
 import { CaseCategory, caseCategories, caseStudies } from '@/lib/site-data';
 import { cn } from '@/lib/utils';
 
 export function CasesListing() {
-  const { language } = useLanguage();
-  const [active, setActive] = useState<'all' | CaseCategory>('all');
+const [active, setActive] = useState<'all' | CaseCategory>('all');
 
   const filtered = useMemo(
     () => (active === 'all' ? caseStudies : caseStudies.filter((study) => study.category === active)),
@@ -27,29 +25,27 @@ export function CasesListing() {
         <div className="container relative z-10">
           <div className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             <span className="h-px w-8 bg-primary/70" />
-            {language === 'zh' ? '项目案例' : 'Selected work'}
+            {'项目案例'}
           </div>
           <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
-            {language === 'zh' ? '把业务难题，做成可落地的系统' : 'Turning business challenges into working systems'}
+            {'把业务难题，做成可落地的系统'}
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            {language === 'zh'
-              ? '从企业级平台、AI 知识库到小程序与数据中台，以下项目均已上线运行，并持续迭代维护。'
-              : 'From enterprise platforms and AI knowledge bases to mini programs and data platforms — these systems are live, in production and still evolving.'}
+            {'从企业级平台、AI 知识库到小程序与数据中台，以下项目均已上线运行，并持续迭代维护。'}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
             <span>
               <strong className="text-foreground">{caseStudies.length}</strong>{' '}
-              {language === 'zh' ? '个完整案例' : 'detailed cases'}
+              {'个完整案例'}
             </span>
             <span>
               <strong className="text-foreground">6</strong>{' '}
-              {language === 'zh' ? '个行业场景' : 'industry scenarios'}
+              {'个行业场景'}
             </span>
             <span>
               <strong className="text-foreground">10+</strong>{' '}
-              {language === 'zh' ? '年研发经验' : 'years of R&D'}
+              {'年研发经验'}
             </span>
           </div>
 
@@ -60,10 +56,10 @@ export function CasesListing() {
               className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/60 hover:text-primary"
             >
               <Download className="h-4 w-4" />
-              {language === 'zh' ? '下载项目案例 PDF' : 'Download case portfolio PDF'}
+              {'下载项目案例 PDF'}
             </a>
             <span className="text-xs text-muted-foreground">
-              {language === 'zh' ? '19 页 · 含项目截图' : '19 pages · includes screenshots'}
+              {'19 页 · 含项目截图'}
             </span>
           </div>
         </div>
@@ -84,7 +80,7 @@ export function CasesListing() {
                     : 'bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground'
                 )}
               >
-                {category.label[language]}
+                {category.label}
                 <span
                   className={cn(
                     'ml-2 text-[11px]',
@@ -107,26 +103,24 @@ export function CasesListing() {
 
           {filtered.length === 0 && (
             <p className="py-16 text-center text-sm text-muted-foreground">
-              {language === 'zh' ? '暂无该分类案例。' : 'No projects in this category yet.'}
+              {'暂无该分类案例。'}
             </p>
           )}
 
           <div className="mt-14 flex flex-col items-start justify-between gap-5 rounded-2xl border bg-muted/40 p-6 sm:flex-row sm:items-center sm:p-8">
             <div>
               <h2 className="text-xl font-semibold">
-                {language === 'zh' ? '你的项目，也可以从这里开始' : 'Your project could be next'}
+                {'你的项目，也可以从这里开始'}
               </h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-                {language === 'zh'
-                  ? '告诉我们业务场景、目标和时间预期，我们会给出可执行的方案与报价。'
-                  : 'Tell us the scenario, the goal and your timeline. We will come back with a practical plan and quote.'}
+                {'告诉我们业务场景、目标和时间预期，我们会给出可执行的方案与报价。'}
               </p>
             </div>
             <Link
               href="/#contact"
               className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
             >
-              {language === 'zh' ? '聊聊你的需求' : 'Discuss your project'}
+              {'聊聊你的需求'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>

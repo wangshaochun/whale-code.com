@@ -1,13 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useLanguage } from '@/components/language-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { industries, stats } from '@/lib/site-data';
 
 export function StatsBar() {
-  const { language } = useLanguage();
-  const { t } = useTranslation();
+const { t } = useTranslation();
 
   return (
     <section className="border-b bg-muted/30">
@@ -26,7 +24,7 @@ export function StatsBar() {
                 {stat.value}
               </p>
               <p className="mt-1.5 text-xs leading-5 text-muted-foreground sm:text-sm">
-                {stat.label[language]}
+                {stat.label}
               </p>
             </motion.div>
           ))}
@@ -37,9 +35,9 @@ export function StatsBar() {
             {t('industriesLabel')}
           </span>
           {industries.map((industry) => (
-            <span key={industry.en} className="flex items-center gap-2">
+            <span key={industry} className="flex items-center gap-2">
               <span className="h-1 w-1 rounded-full bg-primary/60" />
-              {industry[language]}
+              {industry}
             </span>
           ))}
         </div>

@@ -1,51 +1,130 @@
 'use client';
 
-import { useTranslation } from '@/hooks/useTranslation';
 import Image from 'next/image';
-import { Phone } from 'lucide-react';
+import Link from 'next/link';
+import { MapPin, Phone } from 'lucide-react';
+import Logo from './logo';
+import { useLanguage } from './language-provider';
+import { useTranslation } from '@/hooks/useTranslation';
+import { contactInfo, services } from '@/lib/site-data';
+
+const navLinks = [
+  { href: '/#services', key: 'services' },
+  { href: '/cases', key: 'cases' },
+  { href: '/#capabilities', key: 'capabilities' },
+  { href: '/#process', key: 'process' },
+  { href: '/#about', key: 'about' },
+  { href: '/blog', key: 'blog' },
+] as const;
 
 export default function Footer() {
   const { t } = useTranslation();
-  
+  const { language } = useLanguage();
+
   return (
-    <footer className="border-t">
-      <div className="container py-8 md:py-12">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-          <div className="max-w-md mb-8 md:mb-0 text-left">
-            <h3 className="text-lg font-semibold mb-4">石家庄鲸码互联网科技责任有限公司</h3>
-            <p className="text-sm text-muted-foreground">
+    <footer className="border-t bg-muted/30">
+      <div className="container py-12 md:py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.1fr]">
+          <div>
+            <Logo />
+            <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
               {t('footerDesc')}
             </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {(language === 'zh'
+                ? ['软件定制', 'AI 应用', '数据中台', '小程序']
+                : ['Custom software', 'AI applications', 'Data platforms', 'Mini programs']
+              ).map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border bg-background px-2.5 py-1 text-[11px] text-muted-foreground"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="max-w-md mb-8 md:mb-0 text-left">
-            <h4 className="text-lg font-semibold mb-4">{t('businessCooperation')}</h4>
-            <p className="text-sm text-muted-foreground flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  156-1439-2011 <br/>
-                  137-8020-0356
-            </p>
-          </div> 
-            <div className="flex flex-col space-y-4 md:items-end"> 
-                <Image 
-                  src="/weixin-qrcode.jpg" 
-                  alt="WeChat QR Code" 
-                  width={120} 
-                  height={120} 
-                  className="rounded-md"
+
+          <div>
+            <h3 className="text-sm font-semibold">{t('footerNav')}</h3>
+            <ul className="mt-4 space-y-2.5">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {t(link.key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold">{t('footerServices')}</h3>
+            <ul className="mt-4 space-y-2.5">
+              {services.slice(0, 5).map((service) => (
+                <li key={service.title.en} className="text-sm text-muted-foreground">
+                  {service.title[language]}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold">{t('footerContact')}</h3>
+            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2.5">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span className="space-y-1">
+                  {contactInfo.phones.map((phone) => (
+                    <a
+                      key={phone}
+                      href={`tel:+86${phone.replace(/-/g, '')}`}
+                      className="block transition-colors hover:text-primary"
+                    >
+                      {phone}
+                    </a>
+                  ))}
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span className="leading-6">{contactInfo.address[language]}</span>
+              </li>
+            </ul>
+
+            <div className="mt-5 flex items-center gap-3">
+              <div className="relative h-20 w-20 overflow-hidden rounded-lg border bg-white">
+                <Image
+                  src="/weixin-qrcode.jpg"
+                  alt="WeChat QR code"
+                  fill
+                  sizes="80px"
+                  className="object-contain"
                 />
-            </div> 
-            <div className="flex flex-col space-y-4 md:items-end">  
-                 <Image 
-                  src="/weixin-qrcode1.jpg" 
-                  alt="WeChat QR Code" 
-                  width={120} 
-                  height={120} 
-                  className="rounded-md"
-                />
-            </div> 
+              </div>
+              <p className="text-xs leading-5 text-muted-foreground">
+                {t('footerWechat')}
+                <br />
+                {language === 'zh' ? '扫码添加，备注项目咨询' : 'Scan and mention your project'}
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} {t('companyName')}. {t('footerRights')}
+      </div>
+
+      <div className="border-t">
+        <div className="container flex flex-col gap-2 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            &copy; {new Date().getFullYear()} {t('companyName')}. {t('footerRights')}
+          </p>
+          <p>
+            {language === 'zh'
+              ? '石家庄 · 中国 · 服务全国'
+              : 'Shijiazhuang · China · Serving nationwide'}
+          </p>
         </div>
       </div>
     </footer>

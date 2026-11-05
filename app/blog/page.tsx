@@ -1,28 +1,19 @@
-import Link from 'next/link';
+import type { Metadata } from 'next';
+import { BlogListing } from '@/components/blog-listing';
 import { getAllPosts } from '@/lib/posts';
+
+export const metadata: Metadata = {
+  title: '技术博客 | 石家庄鲸码互联网科技',
+  description:
+    '鲸码研发团队的技术文章，涵盖 AI 应用、数据平台、后端架构、Elasticsearch、云原生与效率工具。',
+};
 
 export default function BlogPage() {
   const posts = getAllPosts();
-  
+
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">博客文章</h1>
-      {posts.length === 0 ? (
-        <p>暂无文章</p>
-      ) : (
-        <div className="grid gap-2">
-          {posts.map((post) => (
-            <article key={post.id} className="p-2 border rounded-lg shadow-sm transition-shadow">
-              <Link href={`/blog/${post.id}`} className="block">
-                <h2 className="text-xl font-semibold hover:text-blue-600 transition-colors">{post.title}</h2>
-                {post.date && (
-                  <time className="text-sm text-gray-500 mt-1 block">{post.date}</time>
-                )}
-              </Link>
-            </article>
-          ))}
-        </div>
-      )}
+    <div className="flex flex-col">
+      <BlogListing posts={posts} />
     </div>
   );
-} 
+}

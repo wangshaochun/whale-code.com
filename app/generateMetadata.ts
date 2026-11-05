@@ -2,6 +2,7 @@ import { getTranslation } from '@/lib/translations';
 
 export function generateMetadata(language: 'en' | 'zh' = 'zh') {
   return {
+    metadataBase: new URL('https://whale-code.com'),
     title: getTranslation(language, 'metaTitle'),
     description: getTranslation(language, 'metaDescription'),
     openGraph: {
@@ -13,7 +14,7 @@ export function generateMetadata(language: 'en' | 'zh' = 'zh') {
       card: 'summary_large_image',
       title: getTranslation(language, 'metaTitle'),
       description: getTranslation(language, 'metaDescription'),
-      images: ['images/og-image.png'],
+      images: ['/images/og-image.png'],
     },
   };
 } 

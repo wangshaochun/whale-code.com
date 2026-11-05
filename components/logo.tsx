@@ -17,7 +17,7 @@ export default function Logo() {
           sizes="32px"
         />
       </div>
-      <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+      <span className="whitespace-nowrap text-sm font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent sm:text-xl">
         {t('companyName')}
       </span>
     </div>

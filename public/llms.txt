@@ -20,14 +20,25 @@
 
 - [首页](https://whale-code.com)：公司介绍、服务、案例、技术能力、合作流程与常见问题。
 - [项目案例](https://whale-code.com/cases)：已上线交付的项目列表。
-- [航运监管与审批平台](https://whale-code.com/cases/shipping-supervision)：80+ 可配置审批流，接入电子海图、AIS 与视频监控。
 - [自研数据中台](https://whale-code.com/cases/data-middle-platform)：标签驱动的数据中台，统一数据标准与服务出口。
 - [高校教材选用平台](https://whale-code.com/cases/textbook-selection)：多角色工作流，覆盖填报、专家评审与审定。
 - [审计知识库与 AI 助手](https://whale-code.com/cases/audit-knowledge-base)：审计问题、法规、案例与方法的知识库，配套 AI 问答与小程序。
 - [校园智能监控平台](https://whale-code.com/cases/campus-monitoring)：视频接入、智能识别、异常预警与事件闭环。
 - [运动技能评估系统](https://whale-code.com/cases/sports-assessment)：运动医学场景的评估、报告与随访管理。
 - [电商平台与小程序](https://whale-code.com/cases/ecommerce-platform)：商品、活动、订单与分销佣金一体化的小程序商城。
-- [技术博客](https://whale-code.com/blog)：AI 应用、数据平台、后端架构、Elasticsearch、云原生与效率工具的技术文章。
+- [技术博客](https://whale-code.com/blog)：AI 落地、数据平台、信创部署、Elasticsearch 与微服务排障。
+
+## 精选技术文章
+
+- [私有化 RAG 知识库落地指南](https://whale-code.com/blog/private-rag-knowledge-base)：文档治理、切分、混合检索、评估与权限。
+- [数据中台 CDP 标签体系设计](https://whale-code.com/blog/cdp-tag-system)：OneID、标签分层、计算架构与服务化。
+- [麒麟 V10 ARM 离线部署 Nginx、MySQL 8 与 Redis](https://whale-code.com/blog/kylin-v10-arm-offline-deploy)：信创内网环境的完整部署步骤与坑位。
+- [Elasticsearch 跨集群迁移方案对比](https://whale-code.com/blog/elasticsearch-cross-cluster-migration)：快照、Reindex、Logstash 的适用场景与步骤。
+- [Elasticsearch 集群运维与容量规划](https://whale-code.com/blog/elasticsearch-cluster-ops)：分片、磁盘、Mapping、Nested 与告警。
+- [微服务网关白名单配置了仍然 401](https://whale-code.com/blog/微服务网关白名单配置依然401解决方案)：Nginx 前缀导致的生产环境排障。
+- [Flowable 流程实例删不掉](https://whale-code.com/blog/flowable工作流直接从数据库中删除任务)：运行时表与历史表的删除顺序、风险与替代方案。
+- [2026 年 AI 编程工具实测](https://whale-code.com/blog/2026年3月用到的编程AI工具记录)：Copilot、Cursor、Claude Code、OpenCode 的成本与场景。
+- [鲸码网页 PPT Skill](https://whale-code.com/blog/鲸码网页PPT技能介绍)：单文件 HTML 横向翻页 PPT。
 
 ## 常见问题
 

@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
 
   const postDates = posts
-    .map((post) => postDate(post.date))
+    .map((post) => postDate(post.updated ?? post.date))
     .filter((d): d is Date => Boolean(d));
 
   // 首页与博客列表以最新文章日期作为更新时间，避免每次构建都刷新 lastmod
@@ -54,9 +54,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...posts.map((post) => ({
       url: `${baseUrl}/blog/${encodeURIComponent(post.id)}`,
-      lastModified: postDate(post.date) ?? latestContentDate,
-      changeFrequency: 'yearly' as const,
-      priority: 0.6,
+      lastModified: postDate(post.updated ?? post.date) ?? latestContentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
     })),
   ];
 }

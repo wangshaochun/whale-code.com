@@ -2,30 +2,39 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Search } from 'lucide-react';
+import { ArrowUpRight, Clock3, Search } from 'lucide-react';
 import type { Post } from '@/lib/posts';
 
 const tagRules: { pattern: RegExp; label: string }[] = [
-  { pattern: /AI|Transformer|模型|智能体/i, label: 'AI / 模型' },
-  { pattern: /Elastic|Logstash|ELK|Kibana/i, label: '搜索与日志' },
-  { pattern: /Docker|K8S|Kubernetes|Linux|nginx|麒麟/i, label: '云原生' },
-  { pattern: /mysql|redis|postgres|数据库/i, label: '数据库' },
-  { pattern: /flowable|spring|微服务|网关|K8S/i, label: '后端架构' },
-  { pattern: /PPT|设计|图片|Dribbble|iloveimg/i, label: '效率工具' },
+  { pattern: /RAG|知识库|智能体|大模型|LLM|AI/i, label: 'AI 落地' },
+  { pattern: /CDP|数据中台|标签|数据治理|用户画像/i, label: '数据平台' },
+  { pattern: /麒麟|信创|ARM|离线部署|Nginx|MySQL|Redis/i, label: '信创与部署' },
+  { pattern: /Elasticsearch|Elastic|Logstash|ELK|Kibana/i, label: '搜索与日志' },
+  { pattern: /Flowable|工作流|BPM|微服务|网关|Spring/i, label: '后端与流程' },
+  { pattern: /PPT|Skill|效率工具|编程工具|Copilot|Cursor/i, label: '效率工具' },
 ];
 
-function getTag(title: string) {
-  const rule = tagRules.find((item) => item.pattern.test(title));
+function getTag(post: Post) {
+  if (post.tags.length) return post.tags[0];
+  const rule = tagRules.find((item) => item.pattern.test(post.title));
   return rule ? rule.label : '工程实践';
 }
 
+function getDisplayDate(post: Post) {
+  return post.updated ?? post.date;
+}
+
 export function BlogListing({ posts }: { posts: Post[] }) {
-const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
     const keyword = query.trim().toLowerCase();
     if (!keyword) return posts;
-    return posts.filter((post) => post.title.toLowerCase().includes(keyword));
+
+    return posts.filter((post) => {
+      const searchable = [post.title, post.description ?? '', ...post.tags].join(' ').toLowerCase();
+      return searchable.includes(keyword);
+    });
   }, [posts, query]);
 
   return (
@@ -44,17 +53,18 @@ const [query, setQuery] = useState('');
             {'把踩过的坑，写成可复用的经验'}
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-            {'研发团队在日常项目中沉淀的技术文章，涵盖 AI、数据、后端架构、运维与效率工具。'}
+            {'只保留三类内容：能照着做的排障记录、能帮助决策的选型分析、能验证交付能力的项目复盘。'}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
             <span>
               <strong className="text-foreground">{posts.length}</strong>{' '}
-              {'篇文章'}
+              {'篇精选'}
             </span>
-            <span>AI / 数据</span>
-            <span>{'后端架构'}</span>
-            <span>{'运维实践'}</span>
+            <span>AI 落地</span>
+            <span>{'数据平台'}</span>
+            <span>{'信创与部署'}</span>
+            <span>{'后端与流程'}</span>
           </div>
         </div>
       </section>
@@ -70,7 +80,7 @@ const [query, setQuery] = useState('');
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder={'搜索文章标题…'}
+                placeholder={'搜索标题、摘要或标签…'}
                 className="h-10 w-full rounded-full border bg-background pl-9 pr-4 text-sm outline-none transition-colors focus:border-primary/50 focus:ring-2 focus:ring-primary/10"
               />
             </div>
@@ -92,19 +102,27 @@ const [query, setQuery] = useState('');
                 >
                   <div className="flex items-center justify-between gap-3">
                     <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-primary">
-                      {getTag(post.title)}
+                      {getTag(post)}
                     </span>
-                    {post.date && (
+                    {getDisplayDate(post) && (
                       <time className="shrink-0 text-[11px] text-muted-foreground">
-                        {post.date}
+                        {getDisplayDate(post)}
                       </time>
                     )}
                   </div>
                   <h2 className="mt-4 line-clamp-3 text-base font-semibold leading-6 transition-colors group-hover:text-primary sm:text-lg sm:leading-7">
                     {post.title}
                   </h2>
+                  {post.description && (
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">
+                      {post.description}
+                    </p>
+                  )}
                   <div className="mt-auto flex items-center justify-between border-t pt-4 text-xs text-muted-foreground">
-                    <span>{'阅读文章'}</span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock3 className="h-3.5 w-3.5" />
+                      {`${post.readingTime} 分钟阅读`}
+                    </span>
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </span>

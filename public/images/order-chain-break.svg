@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="400" viewBox="0 0 940 400" role="img" aria-label="一张订单在流程图和实际业务中的对比：系统之间靠人工传数据">
+  <defs>
+    <style>
+      .box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; }
+      .t { font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 13px; fill: #1e293b; }
+      .s { font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 11px; fill: #64748b; }
+      .title { font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 13px; font-weight: 600; fill: #0f172a; }
+      .ok { stroke: #94a3b8; stroke-width: 1.5; }
+      .badline { stroke: #ef4444; stroke-width: 1.5; stroke-dasharray: 5 4; }
+      .bad { font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 11px; fill: #b91c1c; }
+    </style>
+    <marker id="ghead" orient="auto" markerWidth="4" markerHeight="5" refX="3" refY="2.5">
+      <path d="M0,0 V5 L4,2.5 Z" fill="#94a3b8" />
+    </marker>
+    <marker id="rhead" orient="auto" markerWidth="4" markerHeight="5" refX="3" refY="2.5">
+      <path d="M0,0 V5 L4,2.5 Z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <text x="20" y="34" class="title">① 流程图画出来的样子</text>
+
+  <g class="box">
+    <rect x="20" y="58" width="140" height="62" rx="10" />
+    <rect x="210" y="58" width="140" height="62" rx="10" />
+    <rect x="400" y="58" width="140" height="62" rx="10" />
+    <rect x="590" y="58" width="140" height="62" rx="10" />
+    <rect x="780" y="58" width="140" height="62" rx="10" />
+  </g>
+  <g>
+    <text x="90" y="86" text-anchor="middle" class="t">客户订单</text>
+    <text x="90" y="104" text-anchor="middle" class="s">CRM</text>
+    <text x="280" y="86" text-anchor="middle" class="t">库存核查</text>
+    <text x="280" y="104" text-anchor="middle" class="s">ERP</text>
+    <text x="470" y="86" text-anchor="middle" class="t">生产排期</text>
+    <text x="470" y="104" text-anchor="middle" class="s">MES</text>
+    <text x="660" y="86" text-anchor="middle" class="t">采购备料</text>
+    <text x="660" y="104" text-anchor="middle" class="s">ERP</text>
+    <text x="850" y="86" text-anchor="middle" class="t">发货结算</text>
+    <text x="850" y="104" text-anchor="middle" class="s">WMS / 财务</text>
+  </g>
+
+  <g class="ok" marker-end="url(#ghead)">
+    <line x1="160" y1="89" x2="205" y2="89" />
+    <line x1="350" y1="89" x2="395" y2="89" />
+    <line x1="540" y1="89" x2="585" y2="89" />
+    <line x1="730" y1="89" x2="775" y2="89" />
+  </g>
+
+  <text x="20" y="170" class="title">② 实际跑起来的样子</text>
+
+  <g class="box">
+    <rect x="20" y="190" width="140" height="62" rx="10" />
+    <rect x="210" y="190" width="140" height="62" rx="10" />
+    <rect x="400" y="190" width="140" height="62" rx="10" />
+    <rect x="590" y="190" width="140" height="62" rx="10" />
+    <rect x="780" y="190" width="140" height="62" rx="10" />
+  </g>
+  <g>
+    <text x="90" y="218" text-anchor="middle" class="t">客户订单</text>
+    <text x="90" y="236" text-anchor="middle" class="s">销售录入</text>
+    <text x="280" y="218" text-anchor="middle" class="t">库存核查</text>
+    <text x="280" y="236" text-anchor="middle" class="s">再问一遍仓库</text>
+    <text x="470" y="218" text-anchor="middle" class="t">生产排期</text>
+    <text x="470" y="236" text-anchor="middle" class="s">计划员 Excel</text>
+    <text x="660" y="218" text-anchor="middle" class="t">采购备料</text>
+    <text x="660" y="236" text-anchor="middle" class="s">物料重新核对</text>
+    <text x="850" y="218" text-anchor="middle" class="t">发货结算</text>
+    <text x="850" y="236" text-anchor="middle" class="s">财务手工对账</text>
+  </g>
+
+  <g class="badline" marker-end="url(#rhead)">
+    <line x1="160" y1="221" x2="205" y2="221" />
+    <line x1="350" y1="221" x2="395" y2="221" />
+    <line x1="540" y1="221" x2="585" y2="221" />
+    <line x1="730" y1="221" x2="775" y2="221" />
+  </g>
+
+  <g class="bad" text-anchor="middle">
+    <text x="185" y="282">截图发群</text>
+    <text x="375" y="282">Excel 重录</text>
+    <text x="565" y="282">电话确认</text>
+    <text x="755" y="282">单据补录</text>
+  </g>
+
+  <rect x="20" y="310" width="900" height="70" rx="10" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5" />
+  <text x="42" y="340" class="t" style="fill:#7f1d1d">同一张订单，在 CRM、Excel、MES、ERP 里各存一份。</text>
+  <text x="42" y="362" class="s" style="fill:#991b1b">要对到一起，只能打电话问：哪个是最新的？</text>
+</svg>

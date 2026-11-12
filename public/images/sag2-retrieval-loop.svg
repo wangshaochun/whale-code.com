@@ -1,0 +1,85 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480" role="img" aria-label="SAG2 检索流程图：建库只处理原文，检索时用 BM25 召回、JEV 判断证据并提词扩展">
+  <defs>
+    <style>
+      .h { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; fill: #0f172a; }
+      .b { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12.5px; fill: #334155; }
+      .s { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 11px; fill: #64748b; }
+      .blue { fill: #2563eb; }
+      .lane { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.4; stroke-dasharray: 7 5; }
+      .box { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.5; }
+      .key { fill: #eff6ff; stroke: #60a5fa; stroke-width: 1.8; }
+      .out { fill: #f0fdf4; stroke: #86efac; stroke-width: 1.8; }
+      .arrow { fill: none; stroke: #94a3b8; stroke-width: 1.7; marker-end: url(#a); }
+      .loop { fill: none; stroke: #2563eb; stroke-width: 1.7; stroke-dasharray: 6 4; marker-end: url(#lb); }
+    </style>
+    <marker id="a" orient="auto" markerWidth="9" markerHeight="9" refX="8" refY="4.5">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#94a3b8"/>
+    </marker>
+    <marker id="lb" orient="auto" markerWidth="9" markerHeight="9" refX="8" refY="4.5">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <!-- 建库 -->
+  <rect x="20" y="40" width="840" height="108" rx="10" class="lane"/>
+  <text x="40" y="64" class="h">① 建库：只处理原文</text>
+
+  <rect x="40" y="78" width="185" height="54" rx="8" class="box"/>
+  <text x="132" y="100" text-anchor="middle" class="b">本地文档</text>
+  <text x="132" y="119" text-anchor="middle" class="s">PDF / Word / Markdown</text>
+
+  <rect x="247" y="78" width="185" height="54" rx="8" class="box"/>
+  <text x="339" y="100" text-anchor="middle" class="b">解析与切片</text>
+  <text x="339" y="119" text-anchor="middle" class="s">512 字符，80 字符重叠</text>
+
+  <rect x="454" y="78" width="185" height="54" rx="8" class="box"/>
+  <text x="546" y="100" text-anchor="middle" class="b">分词</text>
+  <text x="546" y="119" text-anchor="middle" class="s">jieba，保留标题路径</text>
+
+  <rect x="661" y="78" width="185" height="54" rx="8" class="box"/>
+  <text x="753" y="100" text-anchor="middle" class="b">SQLite FTS5</text>
+  <text x="753" y="119" text-anchor="middle" class="s">原文位置 + 词项</text>
+
+  <line x1="225" y1="105" x2="241" y2="105" class="arrow"/>
+  <line x1="432" y1="105" x2="448" y2="105" class="arrow"/>
+  <line x1="639" y1="105" x2="655" y2="105" class="arrow"/>
+
+  <text x="40" y="168" class="s">11,656 段原文建库 2.36 秒，索引 25.87 MiB；不算向量，也不调用 LLM。</text>
+
+  <!-- 检索 -->
+  <text x="40" y="200" class="h">② 检索：证据判断放在提问时</text>
+
+  <rect x="35" y="224" width="148" height="72" rx="8" class="box"/>
+  <text x="109" y="253" text-anchor="middle" class="b">用户问题</text>
+  <text x="109" y="273" text-anchor="middle" class="s">自然语言提问</text>
+
+  <rect x="205" y="224" width="148" height="72" rx="8" class="box"/>
+  <text x="279" y="253" text-anchor="middle" class="b">拼成查询式</text>
+  <text x="279" y="273" text-anchor="middle" class="s">词项用 OR 连接</text>
+
+  <rect x="375" y="224" width="148" height="72" rx="8" class="box"/>
+  <text x="449" y="253" text-anchor="middle" class="b">BM25 召回</text>
+  <text x="449" y="273" text-anchor="middle" class="s">最多 100 个候选</text>
+
+  <rect x="545" y="224" width="148" height="72" rx="8" class="key"/>
+  <text x="619" y="253" text-anchor="middle" class="b">JEV 判断证据</text>
+  <text x="619" y="273" text-anchor="middle" class="s">是否回答所必需</text>
+
+  <rect x="715" y="224" width="148" height="72" rx="8" class="out"/>
+  <text x="789" y="253" text-anchor="middle" class="b">返回原文片段</text>
+  <text x="789" y="273" text-anchor="middle" class="s">路径 · 行号 · 哈希</text>
+
+  <line x1="183" y1="260" x2="199" y2="260" class="arrow"/>
+  <line x1="353" y1="260" x2="369" y2="260" class="arrow"/>
+  <line x1="523" y1="260" x2="539" y2="260" class="arrow"/>
+  <line x1="693" y1="260" x2="709" y2="260" class="arrow"/>
+
+  <line x1="619" y1="296" x2="619" y2="368" class="arrow"/>
+
+  <rect x="480" y="374" width="310" height="62" rx="8" class="key"/>
+  <text x="635" y="399" text-anchor="middle" class="b">从证据段落提词</text>
+  <text x="635" y="418" text-anchor="middle" class="s">≤10 个起点，≤20 个词项，逐词重查</text>
+
+  <path d="M480,405 H449 V310" class="loop"/>
+  <text x="440" y="345" text-anchor="end" class="s blue">再查 2 轮</text>
+</svg>

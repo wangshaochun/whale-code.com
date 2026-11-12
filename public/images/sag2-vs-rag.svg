@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="580" viewBox="0 0 860 580" role="img" aria-label="传统 RAG 与 SAG2 流程对比：左侧每个切片过一次向量模型并由向量库召回，右侧分词写入 SQLite 全文索引，检索时由 BM25 召回、JEV 判断证据并提词扩展">
+  <defs>
+    <style>
+      .h { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; fill: #0f172a; }
+      .b { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12.5px; fill: #334155; }
+      .s { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 11px; fill: #64748b; }
+      .red { fill: #b91c1c; }
+      .green { fill: #15803d; }
+      .panel-l { fill: #fef2f2; stroke: #fca5a5; stroke-width: 1.5; }
+      .panel-r { fill: #f0fdf4; stroke: #86efac; stroke-width: 1.5; }
+      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.4; }
+      .arrow { fill: none; stroke: #94a3b8; stroke-width: 1.7; marker-end: url(#a); }
+    </style>
+    <marker id="a" orient="auto" markerWidth="9" markerHeight="9" refX="8" refY="4.5">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- 左侧：传统 RAG -->
+  <rect x="25" y="60" width="390" height="490" rx="12" class="panel-l"/>
+  <text x="220" y="94" text-anchor="middle" class="h">传统 RAG</text>
+  <text x="220" y="116" text-anchor="middle" class="s">先向量化，再一次性召回</text>
+
+  <rect x="50" y="140" width="340" height="56" rx="8" class="box"/>
+  <text x="220" y="164" text-anchor="middle" class="b">切片</text>
+  <text x="220" y="184" text-anchor="middle" class="s">按字数或语义切块</text>
+
+  <rect x="50" y="230" width="340" height="56" rx="8" class="box"/>
+  <text x="220" y="254" text-anchor="middle" class="b">向量化</text>
+  <text x="220" y="274" text-anchor="middle" class="s red">每个切片过一次 embedding 模型</text>
+
+  <rect x="50" y="320" width="340" height="56" rx="8" class="box"/>
+  <text x="220" y="344" text-anchor="middle" class="b">向量库召回 Top-K</text>
+  <text x="220" y="364" text-anchor="middle" class="s">按相似度排序，只取一次</text>
+
+  <rect x="50" y="410" width="340" height="56" rx="8" class="box"/>
+  <text x="220" y="434" text-anchor="middle" class="b">拼上下文，交给回答模型</text>
+  <text x="220" y="454" text-anchor="middle" class="s">拿到的可能是半句话</text>
+
+  <line x1="220" y1="196" x2="220" y2="224" class="arrow"/>
+  <line x1="220" y1="286" x2="220" y2="314" class="arrow"/>
+  <line x1="220" y1="376" x2="220" y2="404" class="arrow"/>
+
+  <text x="220" y="504" text-anchor="middle" class="s">文档一更新就要重建索引</text>
+  <text x="220" y="524" text-anchor="middle" class="s">答案难回到原文的某一行</text>
+
+  <!-- 右侧：SAG2 -->
+  <rect x="445" y="60" width="390" height="490" rx="12" class="panel-r"/>
+  <text x="640" y="94" text-anchor="middle" class="h">SAG2</text>
+  <text x="640" y="116" text-anchor="middle" class="s">只索引原文，检索时判断证据</text>
+
+  <rect x="470" y="140" width="340" height="56" rx="8" class="box"/>
+  <text x="640" y="164" text-anchor="middle" class="b">切片</text>
+  <text x="640" y="184" text-anchor="middle" class="s">约 512 字符，80 字符重叠</text>
+
+  <rect x="470" y="230" width="340" height="56" rx="8" class="box"/>
+  <text x="640" y="254" text-anchor="middle" class="b">分词后写进 SQLite FTS5</text>
+  <text x="640" y="274" text-anchor="middle" class="s green">不计算向量，0 次模型调用</text>
+
+  <rect x="470" y="320" width="340" height="56" rx="8" class="box"/>
+  <text x="640" y="344" text-anchor="middle" class="b">BM25 召回，JEV 判断，再提词</text>
+  <text x="640" y="364" text-anchor="middle" class="s">多轮扩展，直到证据够用</text>
+
+  <rect x="470" y="410" width="340" height="56" rx="8" class="box"/>
+  <text x="640" y="434" text-anchor="middle" class="b">返回原文片段和位置</text>
+  <text x="640" y="454" text-anchor="middle" class="s">路径、标题路径、行号、哈希</text>
+
+  <line x1="640" y1="196" x2="640" y2="224" class="arrow"/>
+  <line x1="640" y1="286" x2="640" y2="314" class="arrow"/>
+  <line x1="640" y1="376" x2="640" y2="404" class="arrow"/>
+
+  <text x="640" y="504" text-anchor="middle" class="s">11,656 段建库 2.36 秒，零模型调用</text>
+  <text x="640" y="524" text-anchor="middle" class="s">MuSiQue R@10 86.62%</text>
+</svg>

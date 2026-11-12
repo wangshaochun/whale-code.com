@@ -29,7 +29,7 @@ draft: false
 
 ## 先定位到底有哪些表引用了这个实例
 
-不要凭记忆列表。先查当前库里所有带 `PROC_INST_ID_` 的 `ACT_*` 表：
+不要凭记忆列清单。先查当前库里所有带 `PROC_INST_ID_` 的 `ACT_*` 表：
 
 ```sql
 SELECT TABLE_NAME, COLUMN_NAME

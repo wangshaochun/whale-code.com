@@ -317,7 +317,7 @@ ss -lntp | grep 3306
 下载的是 `openssl-1.1.1d`，编译参数写的是 `openssl-1.1.1l`，会直接找不到目录。统一版本，别混用。
 
 **2. 路径拼写错误**  
-`/usr/locla/nginx/sbin/nginx` 这种拼写错误在复制命令时很常见。用 `tab` 补全，别手敲。
+`/usr/locla/nginx/sbin/nginx` 这种错在复制命令时很常见。用 `Tab` 补全，别手敲。
 
 **3. MySQL 初始化后改 datadir**  
 初始化会把系统库写到旧目录，改完配置再启动会报错。先规划好目录，再初始化。

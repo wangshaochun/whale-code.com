@@ -103,12 +103,12 @@ const { t } = useTranslation();
               <span className="h-2 w-2 rounded-full bg-amber-400/80" />
               <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
               <span className="ml-3 max-w-[70%] truncate rounded-md bg-background/80 px-3 py-0.5 text-[10px] text-muted-foreground">
-                {'航运监管 · 电子海图'}
+                {'审批流程配置'}
               </span>
             </div>
             <div className="relative aspect-[16/9]">
               <Image
-                src="/images/cases/shipping-map.jpg"
+                src="/images/cases/shipping-approval.jpg"
                 alt="Shipping supervision platform"
                 fill
                 priority

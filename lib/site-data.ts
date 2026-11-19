@@ -119,8 +119,8 @@ export const caseStudies: CaseStudy[] = [
     cover: '/images/cases/textbook-workflow.jpg',
     images: [
       { src: '/images/cases/textbook-workflow.jpg', caption: '教材选用任务与流程进度' },
-      { src: '/images/cases/textbook-system.jpg', caption: '教材信息与选用理由填报' },
-      { src: '/images/cases/textbook-role.jpg', caption: '多角色任务与权限管理' },
+      { src: '/images/cases/textbook-bmp.jpg', caption: '政审流程' },
+      { src: '/images/cases/textbook-flow.jpg', caption: '教材选用任务流程' },
     ],
     category: 'industry',
     year: '2024',

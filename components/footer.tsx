@@ -114,9 +114,19 @@ return (
           <p>
             &copy; {new Date().getFullYear()} {t('companyName')}. {t('footerRights')}
           </p>
-          <p>
-            {'石家庄 · 中国 · 服务全国'}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <p>
+              {'石家庄 · 中国 · 服务全国'}
+            </p>
+            <a
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-primary"
+            >
+              冀ICP备2024080023号-2
+            </a>
+          </div>
         </div>
       </div>
     </footer>
